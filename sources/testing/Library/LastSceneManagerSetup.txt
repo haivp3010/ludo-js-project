@@ -1,0 +1,4 @@
+sceneSetups:
+- path: Assets/player1_red/red_moving.unity
+  isLoaded: 1
+  isActive: 1
