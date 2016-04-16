@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/ludo.unity
+- path: Assets/Scenes/ludo.unity
   isLoaded: 1
   isActive: 1
