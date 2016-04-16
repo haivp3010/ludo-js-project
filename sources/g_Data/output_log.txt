@@ -1,0 +1,79 @@
+Initialize engine version: 5.3.4f1 (fdbb5133b820)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: NVIDIA GeForce GTX 950M            (ID=0x139a)
+    Vendor:   NVIDIA
+    VRAM:     3072 MB
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\KhacThanh\Desktop\Project\ludo-js-project\sources\g_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\KhacThanh\Desktop\Project\ludo-js-project\sources\g_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\KhacThanh\Desktop\Project\ludo-js-project\sources\g_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\KhacThanh\Desktop\Project\ludo-js-project\sources\g_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\KhacThanh\Desktop\Project\ludo-js-project\sources\g_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\KhacThanh\Desktop\Project\ludo-js-project\sources\g_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: C:\Users\KhacThanh\Desktop\Project\ludo-js-project\sources\g_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading C:\Users\KhacThanh\Desktop\Project\ludo-js-project\sources\g_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+- Completed reload, in  0.082 seconds
+Platform assembly: C:\Users\KhacThanh\Desktop\Project\ludo-js-project\sources\g_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: C:\Users\KhacThanh\Desktop\Project\ludo-js-project\sources\g_Data\Managed\System.dll (this message is harmless)
+<RI> Initializing input.
+<RI> Input initialized.
+desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
+<RI> Initialized touch support.
+UnloadTime: 1.551803 ms
+Game Start!
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+green_0 (1) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+MouseEnter
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+MouseExit
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+MouseEnter
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+Sprite Clicked!
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+null
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+green_0 (1) (UnityEngine.GameObject)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+MouseExit
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+MouseEnter
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+MouseExit
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+MouseEnter
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+MouseExit
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+Setting up 2 worker threads for Enlighten.
+  Thread -> id: 2e20 -> priority: 1 
+  Thread -> id: 2f10 -> priority: 1 
