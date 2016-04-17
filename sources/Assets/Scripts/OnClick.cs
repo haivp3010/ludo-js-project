@@ -75,9 +75,9 @@ public class OnClick : MonoBehaviour
         positions[47] = new Vector3(4.17f, 2.7f);
         */
         #endregion
-        PositionList PositionList = new PositionList();
+      //  PositionList PositionList = new PositionList();
         
-        SortedList<int, Vector3> positions = PositionList.List;
+       // SortedList<int, Vector3> positions = PositionList.List;
         //        distance = 2;
         //PositionList.List[i]=new Vector3();
     }

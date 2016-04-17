@@ -6,6 +6,8 @@ public class PositionList
 {
     //Cái class này sẽ chốt luôn những toạ độ đi trong map k fix gì hết
     public readonly SortedList<int, Vector3> List = new SortedList<int, Vector3>();
+    //List di binh thương
+    // tạo list 2 cho quân đỏ,...list 3....
     public PositionList()
     {
         List.Add(0, new Vector3(2.97f, 2.9f));
@@ -56,7 +58,13 @@ public class PositionList
         List.Add(45, new Vector3(3.96f, 2.06f));
         List.Add(46, new Vector3(4.49f, 2.24f));
         List.Add(47, new Vector3(4.17f, 2.7f));
-        
+        List.Add(101, new Vector3(3.65f, -0.8f));
+        List.Add(102, new Vector3(3.18f, -0.49f));
+        List.Add(103, new Vector3(2.7f, -0.2f));
+        List.Add(104, new Vector3(2.25f, -0.08f));
+        List.Add(105, new Vector3(1.72f, 0.43f));
+        List.Add(106, new Vector3(1.24f, 0.68f));
+
     }
     }
 
