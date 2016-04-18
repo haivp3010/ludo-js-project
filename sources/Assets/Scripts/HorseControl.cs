@@ -14,6 +14,7 @@ public class HorseControl : MonoBehaviour
     private HorseColor color;
     void Start()
     {
+        anim = gameObject.GetComponent<Animator>();
         color = GameLogic.GetHorseColor(horseNumber);
         position = PositionControl.GetStartPosition(color);
     }
@@ -25,19 +26,22 @@ public class HorseControl : MonoBehaviour
         if (clicked != null)
         {
             anim.enabled = true;
-            clicked.transform.position = Vector3.MoveTowards(transform.position, PositionControl.GetRealPosition(++position), step);
+            int nextPosition = position + 1;
+            clicked.transform.position = Vector3.MoveTowards(transform.position, PositionControl.GetRealPosition(nextPosition), step);
 
-            if (clicked.transform.position == PositionControl.GetRealPosition(position))
+            if (clicked.transform.position == PositionControl.GetRealPosition(nextPosition))
             {
                 i++;
-                Debug.Log("IClick: " + iClick);
+                position++;
+
                 if (i > iClick)
                 {
-                    Debug.Log(iClick);
                     clicked = null;
 
                     anim.enabled = false;
                 }
+
+                /*
                 if (i == 48)
                 {
                     i = 0;
@@ -48,7 +52,7 @@ public class HorseControl : MonoBehaviour
                     i = 101;
                     iClick += 65;
                 }
-
+                */
 
             }
         }
