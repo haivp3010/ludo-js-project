@@ -20,52 +20,43 @@ public class HorseControl : MonoBehaviour
     }
     void Update()
     {
-        //gameObject.transform.position = PositionControl.GetRealPosition(position);
         var step = speed * Time.deltaTime;
 
         if (clicked != null)
         {
             anim.enabled = true;
-            int nextPosition = position + 1;
-            clicked.transform.position = Vector3.MoveTowards(transform.position, PositionControl.GetRealPosition(nextPosition), step);
-
-            if (clicked.transform.position == PositionControl.GetRealPosition(nextPosition))
+            int nextPosition = PositionControl.GetNextPosition(color, position);
+            if (nextPosition == -1)
+                StopMoving();
+            else
             {
-                i++;
-                position++;
+                clicked.transform.position = Vector3.MoveTowards(clicked.transform.position, PositionControl.GetRealPosition(nextPosition), step);
 
-                if (i > iClick)
+                if (clicked.transform.position == PositionControl.GetRealPosition(nextPosition))
                 {
-                    clicked = null;
+                    i++;
+                    position = nextPosition;
 
-                    anim.enabled = false;
+                    if (i >= iClick)
+                        StopMoving();
                 }
-
-                /*
-                if (i == 48)
-                {
-                    i = 0;
-                    iClick -= 48;
-                }
-                if (i == 36)
-                {
-                    i = 101;
-                    iClick += 65;
-                }
-                */
-
             }
         }
     }
 
+    private void StopMoving()
+    {
+        clicked = null;
+        anim.enabled = false;
+    }
+
     private void OnMouseDown()
     {
-        Debug.Log("Sprite Clicked!");
         if (clicked == null)
-            Debug.Log("null");
-        clicked = gameObject;
-        i = 0;
-        Debug.Log(clicked.ToString());
+        {
+            clicked = gameObject;
+            i = 0;
+        }
     }
 
     private void OnMouseEnter()

@@ -6,8 +6,9 @@ public enum HorseColor
     None = -1,
     Red = 0,
     Blue = 1,
-    Yellow = 2,
-    Green = 3
+    Green = 2,
+    Yellow = 3
+    
 }
 
 public class PositionControl
@@ -15,26 +16,29 @@ public class PositionControl
     static PositionList PL = new PositionList();
     public static SortedList<int, Vector3> positionList = PL.List;
     private const int FirstSpawnPosition = 80;
-    private static SortedList<int, Vector3> RealPositionList = new SortedList<int, Vector3>
-    {
-        { 0, new Vector3(2.93f, 1.21f) },
-        { 1, new Vector3(2.35f, 1.21f) },
-        { 2, new Vector3(1.77f, 1.21f) },
-        { 3, new Vector3(1.19f, 1.21f) }
-    };
+
     private static SortedList<HorseColor, int> StartPositionList = new SortedList<HorseColor, int>
     {
         { HorseColor.Red, 0 },
         { HorseColor.Blue, 12 },
-        { HorseColor.Yellow, 36 },
-        { HorseColor.Green, 24 }
+        { HorseColor.Green, 24 },
+        { HorseColor.Yellow, 36 }
+        
     };
     private static SortedList<HorseColor, int> FirstCagePositionList = new SortedList<HorseColor, int>
     {
-        { HorseColor.Red, 56 },
-        { HorseColor.Blue, 62 },
-        { HorseColor.Yellow, 68 },
-        { HorseColor.Green, 74 }
+        { HorseColor.Red, 101 },
+        { HorseColor.Blue, 201 },
+        { HorseColor.Green, 301 },
+        { HorseColor.Yellow, 401 }
+        
+    };
+    private static SortedList<HorseColor, int> CageEntranceList = new SortedList<HorseColor, int>
+    {
+        { HorseColor.Red, 47 },
+        { HorseColor.Blue, 11 },
+        { HorseColor.Green, 23 },
+        { HorseColor.Yellow, 35 }
     };
     public static Vector3 GetRealPosition(int position)
     {
@@ -47,6 +51,17 @@ public class PositionControl
     public static int GetCagePosition(HorseColor color, int cageNumber)
     {
         return FirstCagePositionList[color] + cageNumber - 1;
+    }
+    public static int GetNextPosition(HorseColor color, int currentPosition)
+    {
+        if (currentPosition == 47 && color != HorseColor.Red)
+            return 0;
+        if (CageEntranceList[color] == currentPosition)
+            return FirstCagePositionList[color];
+        else if (FirstCagePositionList.ContainsValue(currentPosition - 5))
+            return -1;
+        else
+            return currentPosition + 1;
     }
     public static int GetSpawnPosition(int horseNumber)
     {
