@@ -1,0 +1,58 @@
+Initialize engine version: 5.3.4f1 (fdbb5133b820)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: NVIDIA NVS 5400M   (ID=0xdef)
+    Vendor:   NVIDIA
+    VRAM:     973 MB
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\Hai\Desktop\New folder\AlphaDemo_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\Hai\Desktop\New folder\AlphaDemo_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\Hai\Desktop\New folder\AlphaDemo_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\Hai\Desktop\New folder\AlphaDemo_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\Hai\Desktop\New folder\AlphaDemo_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\Hai\Desktop\New folder\AlphaDemo_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: C:\Users\Hai\Desktop\New folder\AlphaDemo_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading C:\Users\Hai\Desktop\New folder\AlphaDemo_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+- Completed reload, in  0.070 seconds
+Platform assembly: C:\Users\Hai\Desktop\New folder\AlphaDemo_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: C:\Users\Hai\Desktop\New folder\AlphaDemo_Data\Managed\System.dll (this message is harmless)
+<RI> Initializing input.
+<RI> Input initialized.
+desktop: 1600x900 50Hz; virtual: 1600x900 at 0,0
+<RI> Initialized touch support.
+UnloadTime: 0.817519 ms
+MouseEnter
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+MouseExit
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+MouseEnter
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+MouseExit
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+MouseEnter
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+MouseExit
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+MouseEnter
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+MouseExit
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+Setting up 1 worker threads for Enlighten.
+  Thread -> id: 17cc -> priority: 1 
