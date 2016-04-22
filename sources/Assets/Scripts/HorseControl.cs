@@ -20,6 +20,7 @@ public class HorseControl : MonoBehaviour
     }
     void Update()
     {
+        BoardControl.UpdatePositions(horseNumber, position);
         var step = speed * Time.deltaTime;
 
         if (clicked != null)
@@ -48,14 +49,18 @@ public class HorseControl : MonoBehaviour
     {
         clicked = null;
         anim.enabled = false;
+        BoardControl.PositionsLog();
     }
 
     private void OnMouseDown()
     {
         if (clicked == null)
         {
-            clicked = gameObject;
-            i = 0;
+            if (BoardControl.MoveControl(horseNumber) >= 0)
+            {
+                clicked = gameObject;
+                i = 0;
+            }
         }
     }
 

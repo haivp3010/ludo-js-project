@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 public enum HorseColor
 {
@@ -86,6 +87,66 @@ public class GameLogic : MonoBehaviour
 
     void Awake()
     {
+
+    }
+}
+
+public class BoardControl
+{
+    private static int[] _horsePositions = new int[16];
+
+    // TODO: implement randomization
+    private static int _dice = 10;
+
+    public static void UpdatePositions(int horseNumber, int position)
+    {
+        _horsePositions[horseNumber] = position;
+    }
+
+    public static void PositionsLog()
+    {
+        for (int i = 0; i < 16; i++)
+        {
+            Debug.Log(_horsePositions[i]);
+        }
+    }
+
+    // TODO: double attack logic
+    public static int MoveControl(int horseNumber)
+    {
+        int currentPosition = _horsePositions[horseNumber];
+        bool movable = true;
+
+        // Check if movable in between
+        for (int i = 0; i < _dice - 1; i++)
+        {
+            if (_horsePositions.Contains(PositionControl.GetNextPosition(GameLogic.GetHorseColor(horseNumber), currentPosition + i)))
+            {
+                movable = false;
+                break;
+            }
+        }
+
+        // Check if attackable
+        if (movable)
+        {
+            int target = PositionControl.GetNextPosition(GameLogic.GetHorseColor(horseNumber), currentPosition + _dice - 1);
+            if (_horsePositions.Contains(target))
+            {
+                if (GameLogic.GetHorseColor(target) == GameLogic.GetHorseColor(horseNumber))
+                    // Not attackable
+                    return -1;
+                else
+                    // Attackable
+                    return 1;
+            }
+            else
+                // Movable
+                return 0;
+        }
+        else
+            // Not movable
+            return -1;
 
     }
 }
