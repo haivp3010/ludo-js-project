@@ -53,21 +53,94 @@ public class PositionControl
 
 }
 
-public class GameLogic : MonoBehaviour {
+public class GameState
+{
+    // Singleton Instance
+    private static GameState instance = null;
+
+    // Constants
     public const int NUMBER_OF_PLAYERS = 4; // Red, Blue, Yellow, Green
     public const int NUMBER_OF_HORSES_PER_PLAYER = 4;
     public const int NUMBER_OF_HORSES = NUMBER_OF_PLAYERS * NUMBER_OF_HORSES_PER_PLAYER;
+    /*
+        Horse number:
+        0  -  3 : Red
+        4  -  7 : Blue
+        8  - 11 : Yellow
+        12 - 15 : Green
+    */
+
+    // Private variables
+    private HorseColor currentPlayer;
+    private List<int> horsePosition;
+    private int currentDiceValue; // 1 - 6
+
+    // Properties
+    public HorseColor CurrentPlayer
+    {
+        get
+        {
+            return currentPlayer;
+        }
+        set
+        {
+            currentPlayer = value;
+        }
+    }
+    public List<int> HorsePosition
+    {
+        get
+        {
+            return horsePosition;
+        }
+        set
+        {
+            horsePosition = value;
+        }
+    }
+    public int CurrentDiceValue
+    {
+        get
+        {
+            return currentDiceValue;
+        }
+        set
+        {
+            currentDiceValue = value;
+        }
+    }
+
+    // Methods
     public static HorseColor GetHorseColor(int horseNumber)
     {
-        if ((horseNumber >= 0) && (horseNumber < GameLogic.NUMBER_OF_HORSES))
+        if ((horseNumber >= 0) && (horseNumber < NUMBER_OF_HORSES))
         {
-            return (HorseColor)(horseNumber / GameLogic.NUMBER_OF_HORSES_PER_PLAYER);
+            return (HorseColor)(horseNumber / NUMBER_OF_HORSES_PER_PLAYER);
         }
         return HorseColor.None;
     }
 
-    void Awake ()
+    public void MoveHorseForward(int horseNumber, int steps)
     {
         
+    }
+
+    // Constructor and property to get singleton instance
+    private GameState()
+    {
+        currentPlayer = HorseColor.Red;
+        horsePosition = new List<int>(NUMBER_OF_HORSES);
+        currentDiceValue = 1;
+    }
+    public static GameState Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = new GameState();
+            }
+            return instance;
+        }
     }
 }

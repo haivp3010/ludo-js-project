@@ -1,20 +1,30 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class HorseControl : MonoBehaviour {
-    public int horseNumber; // 0 - 15
+    public int horseNumber;
     private int position;
-    private HorseColor color;
+    private Queue<Vector3> frameVectors;
 	void Start() {
-        color = GameLogic.GetHorseColor(horseNumber);
-        position = PositionControl.GetStartPosition(color);
+        position = PositionControl.GetStartPosition(GameState.GetHorseColor(horseNumber));
+        frameVectors = new Queue<Vector3>();
 	}
 	void Update() {
-        gameObject.transform.position = PositionControl.GetRealPosition(position);
-	}
+        if (position != GameState.Instance.HorsePosition[horseNumber])
+        {
+            // Generate frame vectors
+            // Add vectors to queue
+            position = GameState.Instance.HorsePosition[horseNumber];
+        }
 
+        if (frameVectors.Count > 0)
+        {
+            // Process the first frame vectors
+        }
+	}
     void OnMouseDown ()
     {
-        position++;
+        GameState.Instance.MoveHorseForward(horseNumber, GameState.Instance.CurrentDiceValue);
     }
 }
