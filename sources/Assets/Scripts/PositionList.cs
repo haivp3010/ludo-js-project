@@ -58,12 +58,30 @@ public class PositionList
         List.Add(45, new Vector3(3.96f, 2.06f));
         List.Add(46, new Vector3(4.49f, 2.24f));
         List.Add(47, new Vector3(4.17f, 2.7f));
-        List.Add(101, new Vector3(3.65f, -0.8f));
-        List.Add(102, new Vector3(3.18f, -0.49f));
-        List.Add(103, new Vector3(2.7f, -0.2f));
-        List.Add(104, new Vector3(2.25f, -0.08f));
-        List.Add(105, new Vector3(1.72f, 0.43f));
-        List.Add(106, new Vector3(1.24f, 0.68f));
+        List.Add(101, new Vector3(3.6f, 2.49f));
+        List.Add(102, new Vector3(3.15f, 2.34f));
+        List.Add(103, new Vector3(2.72f, 2.23f));
+        List.Add(104, new Vector3(2.16f, 2.1f));
+        List.Add(105, new Vector3(1.71f, 1.99f));
+        List.Add(106, new Vector3(1.19f, 1.78f));
+        List.Add(201, new Vector3(-3.8f, 2.53f));
+        List.Add(202, new Vector3(-3.37f, 2.4f));
+        List.Add(203, new Vector3(-2.88f, 2.29f));
+        List.Add(204, new Vector3(-2.38f, 2.16f));
+        List.Add(205, new Vector3(-1.86f, 2.03f));
+        List.Add(206, new Vector3(-1.3f, 1.88f));
+        List.Add(301, new Vector3(-3.88f, -0.86f));
+        List.Add(302, new Vector3(-3.39f, -0.5f));
+        List.Add(303, new Vector3(-2.92f, -0.15f));
+        List.Add(304, new Vector3(-2.43f, 0.11f));
+        List.Add(305, new Vector3(-2f, 0.37f));
+        List.Add(306, new Vector3(-1.48f, 0.68f));
+        List.Add(401, new Vector3(3.65f, -0.8f));
+        List.Add(402, new Vector3(3.18f, -0.49f));
+        List.Add(403, new Vector3(2.7f, -0.2f));
+        List.Add(404, new Vector3(2.25f, -0.08f));
+        List.Add(405, new Vector3(1.72f, 0.43f));
+        List.Add(406, new Vector3(1.24f, 0.68f));
 
     }
     }
