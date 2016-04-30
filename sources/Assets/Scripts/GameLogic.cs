@@ -99,6 +99,9 @@ public class PositionControl
 
 public class GameState
 {
+    public static int Dice1;
+    public static int Dice2;
+    public static bool AnimatingDice;
     // Singleton Instance
     private static GameState instance = null;
 
