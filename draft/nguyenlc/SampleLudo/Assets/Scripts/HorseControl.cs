@@ -17,7 +17,7 @@ public class HorseControl : MonoBehaviour {
         {
             position = GameState.Instance.HorsePosition[horseNumber] = 1;
         }
-        gameObject.transform.position = PositionControl.GetRealPosition(position);
+        gameObject.transform.position = GameState.GetRealPosition(position);
         frameVectorQueue = new Queue<Vector3>();
 	}
 
@@ -48,7 +48,7 @@ public class HorseControl : MonoBehaviour {
         List<Vector3> frameVectors = new List<Vector3>();
         for (int i = startPosition + 1; i <= endPosition; i++)
             for (int j = 1; j <= DELTA; j++)
-                frameVectors.Add((PositionControl.GetRealPosition(i) - PositionControl.GetRealPosition(i - 1)) / DELTA);
+                frameVectors.Add((GameState.GetRealPosition(i) - GameState.GetRealPosition(i - 1)) / DELTA);
         return frameVectors;
     }
 }
