@@ -281,31 +281,35 @@ public class GameStateBase
     }
     public static int GetNextPosition(int horseNumber, int currentPosition)
     {
-        // Return -1 if horse is at the 6th cage or input is invalid
+        // The method will return -1 if horse is at the 6th cage or input is invalid
+
         if (currentPosition >= NUMBER_OF_POSITIONS)
             return -1;
         else if (currentPosition >= FIRST_SPAWN_POSITION)
         {
+            // If horse is at spawn -> Next position = start position of the horse
             if (currentPosition == GetSpawnPosition(horseNumber))
                 return GetStartPosition(horseNumber);
             return -1;
         }
         else if (currentPosition >= NUMBER_OF_ROAD_POSITIONS)
         {
+            // If horse is in the cage and is not at the 6th cage -> Next position = position of the next cage
             if ((currentPosition >= GetCagePosition(horseNumber, 1)) && (currentPosition <= GetCagePosition(horseNumber, NUMBER_OF_CAGES_PER_COLOR - 1)))
                 return currentPosition + 1;
             else
                 return -1;
         }
-        else if (currentPosition >= 0)
+        else if (currentPosition >= 0) // If horse is on the road
         {
             foreach (HorseColor color in Enum.GetValues(typeof(HorseColor)))
-                if (currentPosition == GetCageEntrancePosition(color))
-                    if (GetHorseColor(horseNumber) == color)
-                        return GetCagePosition(horseNumber, 1);
-                    else
+                if (currentPosition == GetCageEntrancePosition(color)) // If horse is at a cage entrance
+                    if (GetHorseColor(horseNumber) == color) // If it is the correct cage entrance
+                        return GetCagePosition(horseNumber, 1); // Next position = Position of the 1st cage
+                    else // Else the horse will skip the start position following the cage entrance
                         return (currentPosition + 2) % NUMBER_OF_ROAD_POSITIONS;
-            return (currentPosition + 1) % NUMBER_OF_ROAD_POSITIONS;
+            // If horse is not at any cage entrance -> Next position = the position next to the current position
+            return (currentPosition + 1) % NUMBER_OF_ROAD_POSITIONS; 
         }
         else return -1;
     }
@@ -381,6 +385,7 @@ public class GameState : GameStateBase
     }
     public void ResetDiceAndChangePlayer()
     {
+        // If dice value != 6, switch to the next player
         if (CurrentDiceValue != 6)
             CurrentPlayer = (HorseColor)(((int)CurrentPlayer + 1) % NUMBER_OF_PLAYERS);
         CurrentDiceValue = 0;
@@ -388,27 +393,30 @@ public class GameState : GameStateBase
     public void ProcessDice(int horseNumber)
     {
         int currentPosition = HorsePosition[horseNumber];
-        HorseColor color = GetHorseColor(horseNumber);
         int targetPosition = GetTargetPosition(horseNumber, currentPosition, CurrentDiceValue);
         List<int> blockHorses;
 
-        // If dice value == 0 -> Nothing changed
+        /* Cases that nothing changed
+            - Dice value == 0
+            - Target position == -1
+            - Horse is on the road and not at the cage entrance position, but target position is off the road (caused by a large dice value)
+        */
         if (CurrentDiceValue == 0) return;
-        // If targetPosition == -1 -> Nothing changed
         if (targetPosition == -1) return;
-        // If the horse is near the cage entrance position, and dice value caused target position > cage entrance position -> Nothing changed
-        if ((currentPosition < GetCageEntrancePosition(horseNumber)) && (targetPosition > GetCageEntrancePosition(horseNumber))) return;
-        // If the horse is at spawn and dice value == 1 -> Move it to start position
+        if ((currentPosition < NUMBER_OF_ROAD_POSITIONS) && (currentPosition != GetCageEntrancePosition(horseNumber)) && (targetPosition >= NUMBER_OF_ROAD_POSITIONS)) return;
+        
         if (currentPosition >= FIRST_SPAWN_POSITION)
         {
+            // If the horse is at spawn and dice value == 1 -> Move it to start position
             if ((currentPosition == GetSpawnPosition(horseNumber)) && (CurrentDiceValue == 1))
             {
-                HorsePosition[horseNumber] = GetStartPosition(color);
+                HorsePosition[horseNumber] = GetStartPosition(horseNumber);
                 ResetDiceAndChangePlayer();
             }
         }
         else if (currentPosition >= NUMBER_OF_ROAD_POSITIONS)
         {
+            // If the horse is in the cage -> Check if any horse block it
             blockHorses = GetBlockHorses(horseNumber, CurrentDiceValue);
             if (blockHorses.Count == 0)
             {
@@ -418,6 +426,7 @@ public class GameState : GameStateBase
         }
         else if (currentPosition >= 0)
         {
+            // If the horse is on the road -> Check if any horse block it
             blockHorses = GetBlockHorses(horseNumber, CurrentDiceValue);
             if (blockHorses.Count == 0)
             {
