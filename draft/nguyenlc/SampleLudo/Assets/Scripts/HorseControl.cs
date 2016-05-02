@@ -6,22 +6,15 @@ public class HorseControl : MonoBehaviour {
     public int horseNumber;
     private int position;
     private Queue<Vector3> frameVectorQueue;
-	void Start() {
-        //position = PositionControl.GetStartPosition(GameState.GetHorseColor(horseNumber));
-        // Test code to initialize position for 2 red horses 0 and 1
-        if (horseNumber == 0)
-        {
-            position = GameState.Instance.HorsePosition[horseNumber] = 0;
-        }
-        else
-        {
-            position = GameState.Instance.HorsePosition[horseNumber] = 1;
-        }
+	void Start()
+    {
+        position = GameState.Instance.HorsePosition[horseNumber];
         gameObject.transform.position = GameState.GetRealPosition(position);
         frameVectorQueue = new Queue<Vector3>();
 	}
 
-	void Update() {
+	void Update()
+    {
         int positionInGameState = GameState.Instance.HorsePosition[horseNumber];
         if (position != positionInGameState)
         {
@@ -37,18 +30,16 @@ public class HorseControl : MonoBehaviour {
 	}
     void OnMouseDown ()
     {
-        // Assume the horse will move 3 steps when clicked
-        GameState.Instance.HorsePosition[horseNumber] += 3;
+        GameState.Instance.HorsePosition[horseNumber] = GameState.GetNextPosition(horseNumber, position);
     }
-
     List<Vector3> GenerateFrameVectors(int startPosition, int endPosition)
     {
-        // This function is a prototype, it only solve simple case that 0 <= startPosition <= endPosition <= 55
         const int DELTA = 10; // Generate 10 frame vectors for each step
+        List<int> positionSeries = GameState.GetPositionSeries(horseNumber, startPosition, endPosition);
         List<Vector3> frameVectors = new List<Vector3>();
-        for (int i = startPosition + 1; i <= endPosition; i++)
+        for (int i = 1; i < positionSeries.Count; i++)
             for (int j = 1; j <= DELTA; j++)
-                frameVectors.Add((GameState.GetRealPosition(i) - GameState.GetRealPosition(i - 1)) / DELTA);
+                frameVectors.Add((GameState.GetRealPosition(positionSeries[i]) - GameState.GetRealPosition(positionSeries[i - 1])) / DELTA);
         return frameVectors;
     }
 }

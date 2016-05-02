@@ -10,7 +10,7 @@ public enum HorseColor
     Green = 3
 }
 
-public class GameStateBase
+public abstract class GameStateBase
 {
     // Constants
     /*
@@ -320,6 +320,37 @@ public class GameStateBase
             targetPosition = GetNextPosition(horseNumber, targetPosition);
         return targetPosition;
     }
+
+    public static List<int> GetPositionSeries(int horseNumber, int startPosition, int endPosition)
+    {
+        List<int> result = new List<int>();
+        result.Add(startPosition);
+        if ((startPosition < NUMBER_OF_ROAD_POSITIONS) && (endPosition >= FIRST_SPAWN_POSITION))
+        {
+            result.Add(endPosition);
+        }
+        else
+        {
+            int midPosition = startPosition;
+            do
+            {
+                midPosition = GetNextPosition(horseNumber, midPosition);
+                if (midPosition == -1)
+                {
+                    result.Clear();
+                    result.Add(startPosition);
+                    result.Add(endPosition);
+                    break;
+                }
+                else
+                {
+                    result.Add(midPosition);
+                    if (midPosition == endPosition) break;
+                }
+            } while (true);
+        }
+        return result;
+    }
 }
 
 public class GameState : GameStateBase
@@ -397,10 +428,12 @@ public class GameState : GameStateBase
         List<int> blockHorses;
 
         /* Cases that nothing changed
+            - The horse's color does not match the current player.
             - Dice value == 0
             - Target position == -1
             - Horse is on the road and not at the cage entrance position, but target position is off the road (caused by a large dice value)
         */
+        if (GetHorseColor(horseNumber) != CurrentPlayer) return;
         if (CurrentDiceValue == 0) return;
         if (targetPosition == -1) return;
         if ((currentPosition < NUMBER_OF_ROAD_POSITIONS) && (currentPosition != GetCageEntrancePosition(horseNumber)) && (targetPosition >= NUMBER_OF_ROAD_POSITIONS)) return;
@@ -446,15 +479,18 @@ public class GameState : GameStateBase
             }
         }
     }
-
-    // Constructor and property to get singleton instance
-    private GameState()
+    public void ResetGameState()
     {
         CurrentPlayer = HorseColor.Red;
         HorsePosition = new SortedList<int, int>();
         for (int horseNumber = 0; horseNumber < NUMBER_OF_HORSES; horseNumber++)
             HorsePosition.Add(horseNumber, GetSpawnPosition(horseNumber));
         currentDiceValue = 0;
+    }
+    // Constructor and property to get singleton instance
+    private GameState()
+    {
+        ResetGameState();
     }
     public static GameState Instance
     {
