@@ -1,74 +1,63 @@
-﻿//using UnityEngine;
-//using System.Collections;
+﻿using UnityEngine;
+using System.Collections;
 
-//public class HorseControl : MonoBehaviour
-//{
-//    public Animator anim;
-//    private GameObject clicked;
-//    public float speed;
-//    public static Dice dice1 = new Dice();
-//    private int i = 0;
-//    private int iClick = dice1.Number;
-//    public int horseNumber; // 0 - 15
-//    private int position;
-//    private HorseColor color;
-//    void Start()
-//    {
-//        anim = gameObject.GetComponent<Animator>();
-//        color = GameLogic.GetHorseColor(horseNumber);
-//        position = PositionControl.GetStartPosition(color);
-//    }
-//    void Update()
-//    {
-//        var step = speed * Time.deltaTime;
+public class HorseControl : MonoBehaviour
+{
+    public Animator Anim;
+    public float Speed;
+    public int horseNumber; // 0 - 15
+    private int horsePosition;
+    private HorseColor horseColor;
+    void Start()
+    {
+        // Get references
+        Anim = gameObject.GetComponent<Animator>();
 
-//        if (clicked != null)
-//        {
-//            anim.enabled = true;
-//            int nextPosition = PositionControl.GetNextPosition(color, position);
-//            if (nextPosition == -1)
-//                StopMoving();
-//            else
-//            {
-//                clicked.transform.position = Vector3.MoveTowards(clicked.transform.position, PositionControl.GetRealPosition(nextPosition), step);
+        // Get horse properties
+        horseColor = GameState.GetHorseColor(horseNumber);
+        horsePosition = PositionControl.GetSpawnPosition(horseNumber);
+        gameObject.transform.position = PositionControl.GetRealPosition(horsePosition);
 
-//                if (clicked.transform.position == PositionControl.GetRealPosition(nextPosition))
-//                {
-//                    i++;
-//                    position = nextPosition;
+        // Initialize GameState
+        GameState.Instance.HorsePosition[horseNumber] = horsePosition;
+        
+        
+    }
+    void Update()
+    {
+        var step = Speed * Time.deltaTime;
 
-//                    if (i >= iClick)
-//                        StopMoving();
-//                }
-//            }
-//        }
-//    }
+        if (horsePosition != GameState.Instance.HorsePosition[horseNumber])
+        {
+            if (horsePosition >= 900 || GameState.Instance.HorsePosition[horseNumber] >= 900)
+            {
+                horsePosition = GameState.Instance.HorsePosition[horseNumber];
+                gameObject.transform.position = PositionControl.GetRealPosition(horsePosition);
+            }
+            else
+            {
+                Anim.enabled = true;
+                int nextPosition = PositionControl.GetNextPosition(horseColor, horsePosition);
+                gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, PositionControl.GetRealPosition(nextPosition), step);
+                if (gameObject.transform.position == PositionControl.GetRealPosition(nextPosition))
+                    horsePosition = nextPosition;
+            }
+        }
+    }
 
-//    private void StopMoving()
-//    {
-//        clicked = null;
-//        anim.enabled = false;
-//    }
+    private void OnMouseDown()
+    {
+        //GameState.HorseMoving = true;
+        GameState.Instance.ProcessDice(horseNumber);
+    }
 
-//    private void OnMouseDown()
-//    {
-//        if (clicked == null)
-//        {
-//            clicked = gameObject;
-//            i = 0;
-//        }
-//    }
+    private void OnMouseEnter()
+    {
+        Anim.enabled = true;
+    }
 
-//    private void OnMouseEnter()
-//    {
-//        anim.enabled = true;
-
-//        Debug.Log("MouseEnter");
-//    }
-
-//    private void OnMouseExit()
-//    {
-//        anim.enabled = false;
-//        Debug.Log("MouseExit");
-//    }
-//}
+    private void OnMouseExit()
+    {
+        Anim.enabled = false;
+    }
+}

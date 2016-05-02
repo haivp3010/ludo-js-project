@@ -6,8 +6,8 @@ public enum HorseColor
     None = -1,
     Red = 0,
     Blue = 1,
-    Yellow = 2,
-    Green = 3
+    Green = 2,
+    Yellow = 3
 }
 
 public enum MoveCase
@@ -19,48 +19,40 @@ public enum MoveCase
 
 public class PositionControl
 {
-    // TODO: change spawn position
-    private const int FirstSpawnPosition = 80;
-    // TODO: change real position
-    private static SortedList<int, Vector3> RealPositionList = new SortedList<int, Vector3>
-    {
-        { 0, new Vector3(2.93f, 1.21f) },
-        { 1, new Vector3(2.35f, 1.21f) },
-        { 2, new Vector3(1.77f, 1.21f) },
-        { 3, new Vector3(1.19f, 1.21f) }
-    };
-    // TODO: change start position
     private static SortedList<HorseColor, int> StartPositionList = new SortedList<HorseColor, int>
     {
         { HorseColor.Red, 0 },
-        { HorseColor.Blue, 14 },
-        { HorseColor.Yellow, 28 },
-        { HorseColor.Green, 42 }
+        { HorseColor.Blue, 12 },
+        { HorseColor.Green, 24 },
+        { HorseColor.Yellow, 36 }
     };
-    // TODO: change first cage position
+
     private static SortedList<HorseColor, int> FirstCagePositionList = new SortedList<HorseColor, int>
     {
-        { HorseColor.Red, 56 },
-        { HorseColor.Blue, 62 },
-        { HorseColor.Yellow, 68 },
-        { HorseColor.Green, 74 }
+        { HorseColor.Red, 101 },
+        { HorseColor.Blue, 201 },
+        { HorseColor.Green, 301 },
+        { HorseColor.Yellow, 401 }
     };
+
     public static Vector3 GetRealPosition(int position)
     {
-        return RealPositionList[position];
+        return PositionList.List[position];
     }
+
     public static int GetStartPosition(HorseColor color)
     {
         return StartPositionList[color];
     }
+
     public static int GetCagePosition(HorseColor color, int cageNumber)
     {
         return FirstCagePositionList[color] + cageNumber - 1;
     }
-    // TODO: change get spawn position method
+
     public static int GetSpawnPosition(int horseNumber)
     {
-        return horseNumber + FirstSpawnPosition - 1;
+        return horseNumber + 900;
     }
 
     // Cage entrance list
@@ -102,8 +94,9 @@ public class GameState
     public static int Dice1;
     public static int Dice2;
     public static bool AnimatingDice;
+    public static bool HorseMoving;
     // Singleton Instance
-    private static GameState instance = null;
+    private static GameState _instance = new GameState();
 
     // Constants
     public const int NUMBER_OF_PLAYERS = 4; // Red, Blue, Yellow, Green
@@ -169,15 +162,16 @@ public class GameState
 
     public void MoveHorseForward(int horseNumber, int steps)
     {
-        
+
     }
 
 
     // Move cases
-    private static MoveCase CheckMoveCase(int horseNumber, int steps)
+    private MoveCase CheckMoveCase(int horseNumber, int steps)
     {
         int currentPosition = Instance.HorsePosition[horseNumber];
         HorseColor horseColor = GetHorseColor(horseNumber);
+        List<int> ListHorse = Instance.HorsePosition;
 
         for (int i = 0; i < steps; i++)
         {
@@ -194,7 +188,7 @@ public class GameState
                 else // If there is another horse at the target position
                 {
                     // Check if the two horses have the same color
-                    if (GetHorseColor(currentPosition) == horseColor)
+                    if (GetHorseColor(FindHorseAt(currentPosition)) == horseColor)
                         return MoveCase.Immovable;
                     else
                         return MoveCase.Attackable;
@@ -205,24 +199,45 @@ public class GameState
         return MoveCase.Movable;
     }
 
-    public static void ProcessDice(int horseNumber)
+    private void KillHorse(int horseNumber)
     {
-        // TODO: assign GameState properties to dice
-        int dice_1 = 0;
-        int dice_2 = 0;
+        Instance.HorsePosition[horseNumber] = PositionControl.GetSpawnPosition(horseNumber);
+    }
+
+    private int FindHorseAt(int position)
+    {
+        return Instance.HorsePosition.FindIndex(pos => pos == position);
+    }
+
+    public void ProcessDice(int horseNumber)
+    {
+        int dice_1 = Dice1 + 1;
+        int dice_2 = Dice2 + 1;
         int currentPosition = Instance.HorsePosition[horseNumber];
 
         // If horse is in the base
-        if (Instance.HorsePosition[horseNumber] < 0)
+        if (Instance.HorsePosition[horseNumber] >= 900)
         {
             if (dice_1 == dice_2 ||
                (dice_1 == 6 && dice_2 == 1) ||
                (dice_1 == 1 && dice_2 == 6))
+            {
+                // If there is another horse at start position
+                if (Instance.HorsePosition.Contains(PositionControl.GetStartPosition(GetHorseColor(horseNumber))))
+                {
+                    int startPosition = PositionControl.GetStartPosition(GetHorseColor(horseNumber));
+                    KillHorse(FindHorseAt(startPosition));
+                }
+
+                // Horse Start
                 Instance.HorsePosition[horseNumber] = PositionControl.GetStartPosition(GetHorseColor(horseNumber));
+            }
         }
         else // If horse is not in the base
         {
             int targetPosition = PositionControl.GetTargetPosition(horseNumber, dice_1 + dice_2);
+            Debug.Log("Target : " + targetPosition);
+            Debug.Log(CheckMoveCase(horseNumber, dice_1 + dice_2));
 
             switch (CheckMoveCase(horseNumber, dice_1 + dice_2))
             {
@@ -241,9 +256,8 @@ public class GameState
                 case MoveCase.Attackable:
                     if ((currentPosition > 47 && Instance.HorsePosition[horseNumber] % 100 == dice_1 + dice_2) || currentPosition <= 47)
                     {
+                        KillHorse(FindHorseAt(targetPosition));
                         Instance.HorsePosition[horseNumber] = targetPosition;
-                        int targetHorse = Instance.HorsePosition.FindIndex(position => position == targetPosition);
-                        Instance.HorsePosition[targetHorse] = PositionControl.GetSpawnPosition(targetHorse);
                     }
                     break;
             }
@@ -255,17 +269,15 @@ public class GameState
     {
         currentPlayer = HorseColor.Red;
         horsePosition = new List<int>(NUMBER_OF_HORSES);
+        
+        // Initialize list
+        for (int i = 0; i < NUMBER_OF_HORSES; i++)
+            horsePosition.Add(0);
+
         currentDiceValue = 1;
     }
     public static GameState Instance
     {
-        get
-        {
-            if (instance == null)
-            {
-                instance = new GameState();
-            }
-            return instance;
-        }
+        get { return _instance; }
     }
 }

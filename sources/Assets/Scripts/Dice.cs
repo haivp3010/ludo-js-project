@@ -11,8 +11,6 @@ public class Dice : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private bool updateOn;
     public Sprite[] dice1;              //khai báo các sprite của dice để add
-    private int dice1value;             //giá trị dice 1
-    private int dice2value;             //giá trị dice 2
     private int common;
     public int Number
     {
