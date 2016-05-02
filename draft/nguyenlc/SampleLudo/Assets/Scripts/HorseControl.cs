@@ -30,7 +30,7 @@ public class HorseControl : MonoBehaviour {
 	}
     void OnMouseDown ()
     {
-        GameState.Instance.HorsePosition[horseNumber] = GameState.GetNextPosition(horseNumber, position);
+        GameState.Instance.ProcessDice(horseNumber);
     }
     List<Vector3> GenerateFrameVectors(int startPosition, int endPosition)
     {

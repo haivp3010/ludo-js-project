@@ -4,6 +4,7 @@ using System;
 
 public enum HorseColor
 {
+    None = -1,
     Red = 0,
     Blue = 1,
     Yellow = 2,
@@ -23,7 +24,8 @@ public abstract class GameStateBase
     public const int NUMBER_OF_PLAYERS = 4;
     public const int NUMBER_OF_HORSES_PER_PLAYER = 4;
     public const int NUMBER_OF_HORSES = NUMBER_OF_PLAYERS * NUMBER_OF_HORSES_PER_PLAYER;
-    public const int NUMBER_OF_CAGES_PER_COLOR = 6;
+    public const int NUMBER_OF_CAGES_PER_PLAYER = 6;
+    public const int SUM_OF_CAGE_NUMBERS_IF_WIN = 18; // 6 + 5 + 4 + 3
 
     /* 3 position groups:
         - Road:      0 - 55
@@ -279,10 +281,18 @@ public abstract class GameStateBase
     {
         return GetCagePosition(GetHorseColor(horseNumber), cageNumber);
     }
+    public static int GetCageNumber(int position)
+    {
+        if ((position >= NUMBER_OF_ROAD_POSITIONS) && (position < FIRST_SPAWN_POSITION))
+            return ((position - NUMBER_OF_ROAD_POSITIONS) % NUMBER_OF_CAGES_PER_PLAYER + 1);
+        else if (cageEntrancePositionList.ContainsValue(position))
+            return 0;
+        else
+            return -1;
+    }
     public static int GetNextPosition(int horseNumber, int currentPosition)
     {
         // The method will return -1 if horse is at the 6th cage or input is invalid
-
         if (currentPosition >= NUMBER_OF_POSITIONS)
             return -1;
         else if (currentPosition >= FIRST_SPAWN_POSITION)
@@ -295,7 +305,7 @@ public abstract class GameStateBase
         else if (currentPosition >= NUMBER_OF_ROAD_POSITIONS)
         {
             // If horse is in the cage and is not at the 6th cage -> Next position = position of the next cage
-            if ((currentPosition >= GetCagePosition(horseNumber, 1)) && (currentPosition <= GetCagePosition(horseNumber, NUMBER_OF_CAGES_PER_COLOR - 1)))
+            if ((currentPosition >= GetCagePosition(horseNumber, 1)) && (currentPosition <= GetCagePosition(horseNumber, NUMBER_OF_CAGES_PER_PLAYER - 1)))
                 return currentPosition + 1;
             else
                 return -1;
@@ -303,13 +313,14 @@ public abstract class GameStateBase
         else if (currentPosition >= 0) // If horse is on the road
         {
             foreach (HorseColor color in Enum.GetValues(typeof(HorseColor)))
-                if (currentPosition == GetCageEntrancePosition(color)) // If horse is at a cage entrance
-                    if (GetHorseColor(horseNumber) == color) // If it is the correct cage entrance
-                        return GetCagePosition(horseNumber, 1); // Next position = Position of the 1st cage
-                    else // Else the horse will skip the start position following the cage entrance
-                        return (currentPosition + 2) % NUMBER_OF_ROAD_POSITIONS;
+                if (color != HorseColor.None)
+                    if (currentPosition == GetCageEntrancePosition(color)) // If horse is at a cage entrance
+                        if (GetHorseColor(horseNumber) == color) // If it is the correct cage entrance
+                            return GetCagePosition(horseNumber, 1); // Next position = Position of the 1st cage
+                        else // Else the horse will skip the start position following the cage entrance
+                            return (currentPosition + 2) % NUMBER_OF_ROAD_POSITIONS;
             // If horse is not at any cage entrance -> Next position = the position next to the current position
-            return (currentPosition + 1) % NUMBER_OF_ROAD_POSITIONS; 
+            return (currentPosition + 1) % NUMBER_OF_ROAD_POSITIONS;
         }
         else return -1;
     }
@@ -358,6 +369,7 @@ public class GameState : GameStateBase
     // Private variables
     private static GameState instance = null; // Singleton Instance
     private HorseColor currentPlayer;
+    private HorseColor winner;
     private SortedList<int, int> horsePosition;
     private int currentDiceValue; // 1 - 6
 
@@ -371,6 +383,17 @@ public class GameState : GameStateBase
         set
         {
             currentPlayer = value;
+        }
+    }
+    public HorseColor Winner
+    {
+        get
+        {
+            return winner;
+        }
+        set
+        {
+            winner = value;
         }
     }
     public SortedList<int, int> HorsePosition
@@ -396,7 +419,7 @@ public class GameState : GameStateBase
                 currentDiceValue = value;
         }
     }
-
+    
     // Methods
     private List<int> GetBlockHorses(int horseNumber, int steps)
     {
@@ -414,6 +437,15 @@ public class GameState : GameStateBase
             
         return blockHorses;
     }
+    private void UpdatePositionAndCheckWinner(int horseNumber, int newPosition)
+    {
+        HorsePosition[horseNumber] = newPosition;
+        int sumCageNumber = 0;
+        for (int i = 0, hNum = (int)CurrentPlayer * NUMBER_OF_HORSES_PER_PLAYER; i < NUMBER_OF_HORSES_PER_PLAYER; i++, hNum++)
+            sumCageNumber += GetCageNumber(HorsePosition[hNum]);
+        if (sumCageNumber == SUM_OF_CAGE_NUMBERS_IF_WIN)
+            Winner = CurrentPlayer;
+    }
     public void ResetDiceAndChangePlayer()
     {
         // If dice value != 6, switch to the next player
@@ -424,46 +456,59 @@ public class GameState : GameStateBase
     public void ProcessDice(int horseNumber)
     {
         int currentPosition = HorsePosition[horseNumber];
-        int targetPosition = GetTargetPosition(horseNumber, currentPosition, CurrentDiceValue);
+        int targetPosition;
         List<int> blockHorses;
 
-        /* Cases that nothing changed
-            - The horse's color does not match the current player.
-            - Dice value == 0
-            - Target position == -1
-            - Horse is on the road and not at the cage entrance position, but target position is off the road (caused by a large dice value)
-        */
-        if (GetHorseColor(horseNumber) != CurrentPlayer) return;
+        // If dice value == 0 -> Nothing changed
         if (CurrentDiceValue == 0) return;
-        if (targetPosition == -1) return;
-        if ((currentPosition < NUMBER_OF_ROAD_POSITIONS) && (currentPosition != GetCageEntrancePosition(horseNumber)) && (targetPosition >= NUMBER_OF_ROAD_POSITIONS)) return;
+        // If the selected horse's color does not match the current player -> Nothing changed
+        if (GetHorseColor(horseNumber) != CurrentPlayer) return;
         
         if (currentPosition >= FIRST_SPAWN_POSITION)
         {
-            // If the horse is at spawn and dice value == 1 -> Move it to start position
+            /* If the horse is at spawn -> Move it to start position if and only if:
+                - Dice value == 1
+                - No other horse is at the start position
+            */
             if ((currentPosition == GetSpawnPosition(horseNumber)) && (CurrentDiceValue == 1))
             {
-                HorsePosition[horseNumber] = GetStartPosition(horseNumber);
-                ResetDiceAndChangePlayer();
+                targetPosition = GetStartPosition(horseNumber);
+                blockHorses = GetBlockHorses(horseNumber, 1);
+                if (blockHorses.Count == 0)
+                {
+                    UpdatePositionAndCheckWinner(horseNumber, targetPosition);
+                    ResetDiceAndChangePlayer();
+                }
             }
         }
         else if (currentPosition >= NUMBER_OF_ROAD_POSITIONS)
         {
-            // If the horse is in the cage -> Check if any horse block it
-            blockHorses = GetBlockHorses(horseNumber, CurrentDiceValue);
-            if (blockHorses.Count == 0)
+            /* If the horse is in the cage -> Move it to the next cage if and only if:
+                - Dice value == Number of the next cage
+                - No other horse in the next cage
+            */
+            if (CurrentDiceValue == GetCageNumber(currentPosition) + 1)
             {
-                HorsePosition[horseNumber] = targetPosition;
-                ResetDiceAndChangePlayer();
+                targetPosition = GetNextPosition(horseNumber, currentPosition);
+                blockHorses = GetBlockHorses(horseNumber, 1);
+                if (blockHorses.Count == 0)
+                {
+                    UpdatePositionAndCheckWinner(horseNumber, targetPosition);
+                    ResetDiceAndChangePlayer();
+                }
             }
         }
         else if (currentPosition >= 0)
         {
-            // If the horse is on the road -> Check if any horse block it
+            targetPosition = GetTargetPosition(horseNumber, currentPosition, CurrentDiceValue);
+            // If the horse is on the road and not at the cage entrance position,
+            // but target position is off the road (caused by a large dice value) -> Nothing changed
+            if ((currentPosition != GetCageEntrancePosition(horseNumber)) && (targetPosition >= NUMBER_OF_ROAD_POSITIONS)) return;
+            // Check if any horse block it
             blockHorses = GetBlockHorses(horseNumber, CurrentDiceValue);
             if (blockHorses.Count == 0)
             {
-                HorsePosition[horseNumber] = targetPosition;
+                UpdatePositionAndCheckWinner(horseNumber, targetPosition);
                 ResetDiceAndChangePlayer();
             }
             else if (blockHorses.Count == 1) 
@@ -472,16 +517,18 @@ public class GameState : GameStateBase
                 // Check if the block horse can be kicked
                 if ((HorsePosition[blockHorseNumber] == targetPosition) && !IsSameColor(blockHorseNumber, horseNumber))
                 {
-                    HorsePosition[horseNumber] = targetPosition;
-                    HorsePosition[blockHorseNumber] = GetSpawnPosition(blockHorseNumber);
+                    UpdatePositionAndCheckWinner(horseNumber, targetPosition);
+                    UpdatePositionAndCheckWinner(blockHorseNumber, GetSpawnPosition(blockHorseNumber));
                     ResetDiceAndChangePlayer();
                 }
             }
         }
     }
+
     public void ResetGameState()
     {
         CurrentPlayer = HorseColor.Red;
+        Winner = HorseColor.None;
         HorsePosition = new SortedList<int, int>();
         for (int horseNumber = 0; horseNumber < NUMBER_OF_HORSES; horseNumber++)
             HorsePosition.Add(horseNumber, GetSpawnPosition(horseNumber));

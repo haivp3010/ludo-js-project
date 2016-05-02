@@ -1,50 +1,73 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
-
 public class UIControl : MonoBehaviour {
     public Text diceValueText;
     public Text currentPlayerText;
     public Button buttonRoll;
     public Button buttonSkip;
     public Button buttonNewGame;
+    public Image winnerPanel;
+    public Text labelWinner;
+    public Text textWinner;
+    
+    Color GetCorrespondingColor(HorseColor color)
+    {
+        switch(color)
+        {
+            case HorseColor.Red: return Color.red;
+            case HorseColor.Blue: return Color.blue;
+            case HorseColor.Yellow: return Color.yellow;
+            case HorseColor.Green: return Color.green;
+            default: return Color.white;
+        }
+    }
     void Start()
     {
         buttonRoll.onClick.AddListener(delegate { ButtonRoll_OnClick(); });
         buttonSkip.onClick.AddListener(delegate { ButtonSkip_OnClick(); });
         buttonNewGame.onClick.AddListener(delegate { ButtonNewGame_OnClick(); });
+        HideWinnerPanel();
     }
     void Update()
     {
         currentPlayerText.text = GameState.Instance.CurrentPlayer.ToString();
-        switch (GameState.Instance.CurrentPlayer)
-        {
-            case HorseColor.Red:
-                currentPlayerText.color = Color.red;
-                break;
-            case HorseColor.Blue:
-                currentPlayerText.color = Color.blue;
-                break;
-            case HorseColor.Yellow:
-                currentPlayerText.color = Color.yellow;
-                break;
-            case HorseColor.Green:
-                currentPlayerText.color = Color.green;
-                break;
-        };
+        currentPlayerText.color = GetCorrespondingColor(GameState.Instance.CurrentPlayer);
         diceValueText.text = GameState.Instance.CurrentDiceValue.ToString();
-        
+        buttonRoll.interactable = (GameState.Instance.CurrentDiceValue == 0);
+        buttonSkip.interactable = !buttonRoll.interactable;
+        if (GameState.Instance.Winner != HorseColor.None)
+            DisplayWinnerPanel();
+    }
+    void DisplayWinnerPanel()
+    {
+        this.enabled = false;
+        winnerPanel.enabled = true;
+        labelWinner.enabled = true;
+        textWinner.enabled = true;
+        buttonRoll.interactable = false;
+        buttonSkip.interactable = false;
+        textWinner.text = GameState.Instance.Winner.ToString();
+        textWinner.color = GetCorrespondingColor(GameState.Instance.Winner);
+    }
+    void HideWinnerPanel()
+    {
+        winnerPanel.enabled = false;
+        labelWinner.enabled = false;
+        textWinner.enabled = false;
+        winnerPanel.rectTransform.anchoredPosition = new Vector2(-400, 0);
+        this.enabled = true;
     }
     public void ButtonRoll_OnClick()
     {
-        Debug.Log("ButtonRoll clicked!");
+        GameState.Instance.CurrentDiceValue = Random.Range(1, 7); // Set dice value randomly from the range 0 - 6
     }
     public void ButtonSkip_OnClick()
     {
-        Debug.Log("ButtonSkip clicked!");
+        GameState.Instance.ResetDiceAndChangePlayer();
     }
     public void ButtonNewGame_OnClick()
     {
-        Debug.Log("ButtonNewGame clicked!");
+        HideWinnerPanel();
+        GameState.Instance.ResetGameState();
     }
 }
