@@ -25,7 +25,7 @@ public class Dice : MonoBehaviour
     {
         anim = gameObject.GetComponent<Animator>();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-        Random chance = new Random();
+        //Random chance = new Random();
         anim.enabled = false;
 
     }
@@ -62,8 +62,11 @@ public class Dice : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        StartCoroutine(updateOff());                //khởi tạo coroutine, khi gọi hàm updateoff sẽ tắt animation trong 2 giây
-        GameState.AnimatingDice = true;             //dùng GameState làm hàm trung gian, khi AnimatingDIce = true sẽ enable animation trong hàm update
+        if (!GameState.AnimatingDice && !GameState.Instance.DiceRolled)
+        {
+            StartCoroutine(updateOff());                //khởi tạo coroutine, khi gọi hàm updateoff sẽ tắt animation trong 2 giây
+            GameState.AnimatingDice = true;             //dùng GameState làm hàm trung gian, khi AnimatingDIce = true sẽ enable animation trong hàm update
+        }
     }
 
 
@@ -92,6 +95,10 @@ public class Dice : MonoBehaviour
         {
             GameState.Dice1 = Random.Range(0, 6);
             GameState.Dice2 = Random.Range(0, 6);
+
+            // Ensure the 80% chance of different dice
+            while (GameState.Dice2 == GameState.Dice1)
+                GameState.Dice2 = Random.Range(0, 6);
         }
 
         GameState.Instance.DiceRolled = true;

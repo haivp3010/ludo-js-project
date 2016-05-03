@@ -90,7 +90,7 @@ public class PositionControl
     }
 }
 
-public class GameState:MonoBehaviour
+public class GameState
 {
     public static int Dice1;
     public static int Dice2;
@@ -216,7 +216,6 @@ public class GameState:MonoBehaviour
     {
         int currentPosition = Instance.HorsePosition[horseNumber];
         HorseColor horseColor = GetHorseColor(horseNumber);
-        List<int> ListHorse = Instance.HorsePosition;
 
         for (int i = 0; i < steps; i++)
         {
@@ -251,13 +250,30 @@ public class GameState:MonoBehaviour
         int steps = dice_1 + dice_2;
         int currentPosition = Instance.HorsePosition[horseNumber];
         HorseColor horseColor = GetHorseColor(horseNumber);
-        List<int> ListHorse = Instance.HorsePosition;
 
         // Horse is in the cage
         if (currentPosition > 47 && currentPosition < 900)
         {
             if (currentPosition + 1 == steps || dice_1 == dice_2)
                 return MoveCase.Movable;
+            else
+                return MoveCase.Immovable;
+        }
+
+        if (currentPosition >= 900)
+        {
+            if (dice_1 == dice_2 || (dice_1 == 6 && dice_2 == 1) || (dice_1 == 1 && dice_2 == 6))
+            {
+                if (Instance.HorsePosition.Contains(PositionControl.GetStartPosition(currentPlayer)))
+                {
+                    if (GetHorseColor(FindHorseAt(PositionControl.GetStartPosition(currentPlayer))) != horseColor)
+                        return MoveCase.Attackable;
+                    else
+                        return MoveCase.Immovable;
+                }
+                else
+                    return MoveCase.Movable;
+            }
             else
                 return MoveCase.Immovable;
         }
@@ -291,7 +307,7 @@ public class GameState:MonoBehaviour
 
     public bool NoHorseCanMove()
     {
-        for (int i = (int)currentPlayer * 4; i <= (int)currentPlayer + 4; i++)
+        for (int i = (int)currentPlayer * 4; i < (int)currentPlayer * 4 + 4; i++)
         {
             if (_movable[i] != MoveCase.Immovable)
                 return false;
@@ -301,7 +317,7 @@ public class GameState:MonoBehaviour
 
     public void UpdateMovable()
     {
-        for (int i = (int)currentPlayer * 4; i <= (int)currentPlayer + 4; i++)
+        for (int i = (int)currentPlayer * 4; i < (int)currentPlayer * 4 + 4; i++)
         {
             if (CheckMoveCase(i, Dice1 + 1, Dice2 + 1) == MoveCase.Immovable)
             {
@@ -311,7 +327,7 @@ public class GameState:MonoBehaviour
                     _movable[i] = MoveCase.Immovable;
             }
             else
-                _movable[i] = CheckMoveCase(i, Dice1, Dice2);
+                _movable[i] = CheckMoveCase(i, Dice1 + 1, Dice2 + 1);
         }
     }
 
@@ -401,13 +417,6 @@ public class GameState:MonoBehaviour
                     break;
             }
         }
-
-        // Next player
-        if (!(dice_1 == dice_2) || (dice_1 * dice_2 == 6 && dice_1 + dice_2 == 7))
-            NextPlayer();
-
-        // Reset dice roll
-        _diceRolled = false;
     }
 
     public void CheckWinner()

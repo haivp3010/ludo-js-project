@@ -8,6 +8,7 @@ public class HorseControl : MonoBehaviour
     public int horseNumber; // 0 - 15
     private int horsePosition;
     private HorseColor horseColor;
+
     void Start()
     {
         // Get references
@@ -20,11 +21,11 @@ public class HorseControl : MonoBehaviour
 
         // Initialize GameState
         GameState.Instance.HorsePosition[horseNumber] = horsePosition;
-        
-        
     }
+
     void Update()
     {
+        // Only current player can click on horses
         if (horseColor != GameState.Instance.CurrentPlayer)
             gameObject.GetComponent<PolygonCollider2D>().enabled = false;
         else
@@ -45,6 +46,8 @@ public class HorseControl : MonoBehaviour
                 {
                     horsePosition = GameState.Instance.HorsePosition[horseNumber];
                     gameObject.transform.position = PositionControl.GetRealPosition(horsePosition);
+                    // Reset dice roll
+                    GameState.Instance.DiceRolled = false;
                 }
                 else
                 {
@@ -59,7 +62,18 @@ public class HorseControl : MonoBehaviour
                         {
                             gameObject.transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y);
                         }
+
                         Anim.enabled = false;
+
+                        // If horse comes to target, change turn
+                        if (horsePosition == GameState.Instance.HorsePosition[horseNumber])
+                        {
+                            if (!((GameState.Dice1 == GameState.Dice2) || (GameState.Dice1 == 0 && GameState.Dice2 == 5) || (GameState.Dice1 == 5 && GameState.Dice2 == 0)))
+                                GameState.Instance.NextPlayer();
+                            
+                            // Reset dice roll
+                            GameState.Instance.DiceRolled = false;
+                        }
                     }
                 }
             }
