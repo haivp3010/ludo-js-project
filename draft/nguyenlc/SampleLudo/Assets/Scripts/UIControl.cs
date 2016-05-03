@@ -54,7 +54,6 @@ public class UIControl : MonoBehaviour {
         winnerPanel.enabled = false;
         labelWinner.enabled = false;
         textWinner.enabled = false;
-        winnerPanel.rectTransform.anchoredPosition = new Vector2(-400, 0);
         this.enabled = true;
     }
     public void ButtonRoll_OnClick()
