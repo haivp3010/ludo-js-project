@@ -95,8 +95,8 @@ public class GameState:MonoBehaviour
     public static int Dice1;
     public static int Dice2;
     public static bool AnimatingDice;
-    public static bool HorseMoving;
-    public HorseColor Winner = HorseColor.None;
+    
+
     // Singleton Instance
     private static GameState _instance = new GameState();
 
@@ -108,14 +108,17 @@ public class GameState:MonoBehaviour
         Horse number:
         0  -  3 : Red
         4  -  7 : Blue
-        8  - 11 : Yellow
-        12 - 15 : Green
+        8  - 11 : Green
+        12 - 15 : Yellow
     */
 
     // Private variables
     private HorseColor currentPlayer;
     private List<int> horsePosition;
-    private int currentDiceValue; // 1 - 6
+    private bool _horseMoving;
+    private HorseColor _winner = HorseColor.None;
+    private bool _diceRolled = false;
+    private MoveCase[] _movable = new MoveCase[16];
 
     // Properties
     public HorseColor CurrentPlayer
@@ -140,15 +143,52 @@ public class GameState:MonoBehaviour
             horsePosition = value;
         }
     }
-    public int CurrentDiceValue
+    public bool HorseMoving
     {
         get
         {
-            return currentDiceValue;
+            return _horseMoving;
         }
+
         set
         {
-            currentDiceValue = value;
+            _horseMoving = value;
+        }
+    }
+    public HorseColor Winner
+    {
+        get
+        {
+            return _winner;
+        }
+
+        set
+        {
+            _winner = value;
+        }
+    }
+    public bool DiceRolled
+    {
+        get
+        {
+            return _diceRolled;
+        }
+
+        set
+        {
+            _diceRolled = value;
+        }
+    }
+    public MoveCase[] Movable
+    {
+        get
+        {
+            return _movable;
+        }
+
+        set
+        {
+            _movable = value;
         }
     }
 
@@ -162,11 +202,13 @@ public class GameState:MonoBehaviour
         return HorseColor.None;
     }
 
-    public void MoveHorseForward(int horseNumber, int steps)
+    public void NextPlayer()
     {
-
+        if (currentPlayer == HorseColor.Yellow)
+            currentPlayer = HorseColor.Red;
+        else
+            currentPlayer++;
     }
-
 
     // Move cases
     // Check Move case in case immovable and two dice are equal
@@ -247,6 +289,32 @@ public class GameState:MonoBehaviour
         return MoveCase.Movable;
     }
 
+    public bool NoHorseCanMove()
+    {
+        for (int i = (int)currentPlayer * 4; i <= (int)currentPlayer + 4; i++)
+        {
+            if (_movable[i] != MoveCase.Immovable)
+                return false;
+        }
+        return true;
+    }
+
+    public void UpdateMovable()
+    {
+        for (int i = (int)currentPlayer * 4; i <= (int)currentPlayer + 4; i++)
+        {
+            if (CheckMoveCase(i, Dice1 + 1, Dice2 + 1) == MoveCase.Immovable)
+            {
+                if (Dice1 == Dice2)
+                    _movable[i] = CheckMoveCase(i, (Dice1 + Dice2) / 2);
+                else
+                    _movable[i] = MoveCase.Immovable;
+            }
+            else
+                _movable[i] = CheckMoveCase(i, Dice1, Dice2);
+        }
+    }
+
     private void KillHorse(int horseNumber)
     {
         Instance.HorsePosition[horseNumber] = PositionControl.GetSpawnPosition(horseNumber);
@@ -259,6 +327,10 @@ public class GameState:MonoBehaviour
 
     public void ProcessDice(int horseNumber)
     {
+        // If dice are not rolled, do nothing
+        if (!_diceRolled)
+            return;
+
         int dice_1 = Dice1 + 1;
         int dice_2 = Dice2 + 1;
         int currentPosition = Instance.HorsePosition[horseNumber];
@@ -329,6 +401,13 @@ public class GameState:MonoBehaviour
                     break;
             }
         }
+
+        // Next player
+        if (!(dice_1 == dice_2) || (dice_1 * dice_2 == 6 && dice_1 + dice_2 == 7))
+            NextPlayer();
+
+        // Reset dice roll
+        _diceRolled = false;
     }
 
     public void CheckWinner()
@@ -352,8 +431,6 @@ public class GameState:MonoBehaviour
         // Initialize list
         for (int i = 0; i < NUMBER_OF_HORSES; i++)
             horsePosition.Add(0);
-
-        currentDiceValue = 1;
     }
     public static GameState Instance
     {

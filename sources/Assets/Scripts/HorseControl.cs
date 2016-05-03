@@ -25,6 +25,11 @@ public class HorseControl : MonoBehaviour
     }
     void Update()
     {
+        if (horseColor != GameState.Instance.CurrentPlayer)
+            gameObject.GetComponent<PolygonCollider2D>().enabled = false;
+        else
+            gameObject.GetComponent<PolygonCollider2D>().enabled = true
+                ;
         if (GameState.Instance.Winner != HorseColor.None && horsePosition == GameState.Instance.HorsePosition[horseNumber])
         {
             gameObject.GetComponent<PolygonCollider2D>().enabled = false;
@@ -58,6 +63,8 @@ public class HorseControl : MonoBehaviour
                     }
                 }
             }
+            else
+                GameState.Instance.HorseMoving = false;
 
             GameState.Instance.CheckWinner();
         }
@@ -65,8 +72,11 @@ public class HorseControl : MonoBehaviour
 
     private void OnMouseDown()
     {
-        //GameState.HorseMoving = true;
-        GameState.Instance.ProcessDice(horseNumber);
+        if (!GameState.Instance.HorseMoving)
+        {
+            GameState.Instance.HorseMoving = true;
+            GameState.Instance.ProcessDice(horseNumber);
+        }
     }
 
     private void OnMouseEnter()

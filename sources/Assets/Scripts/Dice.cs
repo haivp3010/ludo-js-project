@@ -94,6 +94,15 @@ public class Dice : MonoBehaviour
             GameState.Dice2 = Random.Range(0, 6);
         }
 
+        GameState.Instance.DiceRolled = true;
+        GameState.Instance.UpdateMovable();
+        if (GameState.Instance.NoHorseCanMove())
+            if (!(GameState.Dice1 == GameState.Dice2 || (GameState.Dice1 == 0 && GameState.Dice2 == 5) || (GameState.Dice1 == 5 && GameState.Dice2 == 0)))
+            {
+                GameState.Instance.NextPlayer();
+                GameState.Instance.DiceRolled = false;
+            }
+
         anim.enabled = false;
         GameState.AnimatingDice = false;
         Debug.Log("common = " + common);
