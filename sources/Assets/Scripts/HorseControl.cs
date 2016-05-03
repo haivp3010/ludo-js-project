@@ -25,33 +25,41 @@ public class HorseControl : MonoBehaviour
     }
     void Update()
     {
-        var step = Speed * Time.deltaTime;
-
-        if (horsePosition != GameState.Instance.HorsePosition[horseNumber])
+        if (GameState.Instance.Winner != HorseColor.None && horsePosition == GameState.Instance.HorsePosition[horseNumber])
         {
-            if (horsePosition >= 900 || GameState.Instance.HorsePosition[horseNumber] >= 900)
+            gameObject.GetComponent<PolygonCollider2D>().enabled = false;
+
+        }
+        else
+        {
+            var step = Speed * Time.deltaTime;
+
+            if (horsePosition != GameState.Instance.HorsePosition[horseNumber])
             {
-                horsePosition = GameState.Instance.HorsePosition[horseNumber];
-                gameObject.transform.position = PositionControl.GetRealPosition(horsePosition);
-            }
-            else
-            {
-                Anim.enabled = true;
-                int nextPosition = PositionControl.GetNextPosition(horseColor, horsePosition);
-                gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, PositionControl.GetRealPosition(nextPosition), step);
-                
-                if (gameObject.transform.position == PositionControl.GetRealPosition(nextPosition))
+                if (horsePosition >= 900 || GameState.Instance.HorsePosition[horseNumber] >= 900)
                 {
-                    horsePosition = nextPosition;
-                    if (horsePosition == 12 || horsePosition == 17 || horsePosition == 23 || horsePosition == 35 || horsePosition == 41 || horsePosition == 46)
+                    horsePosition = GameState.Instance.HorsePosition[horseNumber];
+                    gameObject.transform.position = PositionControl.GetRealPosition(horsePosition);
+                }
+                else
+                {
+                    Anim.enabled = true;
+                    int nextPosition = PositionControl.GetNextPosition(horseColor, horsePosition);
+                    gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, PositionControl.GetRealPosition(nextPosition), step);
+
+                    if (gameObject.transform.position == PositionControl.GetRealPosition(nextPosition))
                     {
-                        gameObject.transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y);
+                        horsePosition = nextPosition;
+                        if (horsePosition == 12 || horsePosition == 17 || horsePosition == 23 || horsePosition == 35 || horsePosition == 41 || horsePosition == 46)
+                        {
+                            gameObject.transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y);
+                        }
+                        Anim.enabled = false;
                     }
                 }
-                    
-                
-               
             }
+
+            GameState.Instance.CheckWinner();
         }
     }
 

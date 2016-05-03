@@ -96,6 +96,7 @@ public class GameState:MonoBehaviour
     public static int Dice2;
     public static bool AnimatingDice;
     public static bool HorseMoving;
+    public HorseColor Winner = HorseColor.None;
     // Singleton Instance
     private static GameState _instance = new GameState();
 
@@ -168,11 +169,56 @@ public class GameState:MonoBehaviour
 
 
     // Move cases
+    // Check Move case in case immovable and two dice are equal
     private MoveCase CheckMoveCase(int horseNumber, int steps)
     {
         int currentPosition = Instance.HorsePosition[horseNumber];
         HorseColor horseColor = GetHorseColor(horseNumber);
         List<int> ListHorse = Instance.HorsePosition;
+
+        for (int i = 0; i < steps; i++)
+        {
+            currentPosition = PositionControl.GetNextPosition(horseColor, currentPosition);
+
+            if (currentPosition == -1)
+                return MoveCase.Immovable;
+            if (Instance.HorsePosition.Contains(currentPosition))
+            {
+                // Check if movable
+                if (i != steps - 1)
+                {
+                    return MoveCase.Immovable;
+                }
+                else // If there is another horse at the target position
+                {
+                    // Check if the two horses have the same color
+                    if (GetHorseColor(FindHorseAt(currentPosition)) == horseColor)
+                        return MoveCase.Immovable;
+                    else
+                        return MoveCase.Attackable;
+                }
+            }
+        }
+
+        return MoveCase.Movable;
+    }
+
+    // Check move case according to two dice
+    private MoveCase CheckMoveCase(int horseNumber, int dice_1, int dice_2)
+    {
+        int steps = dice_1 + dice_2;
+        int currentPosition = Instance.HorsePosition[horseNumber];
+        HorseColor horseColor = GetHorseColor(horseNumber);
+        List<int> ListHorse = Instance.HorsePosition;
+
+        // Horse is in the cage
+        if (currentPosition > 47 && currentPosition < 900)
+        {
+            if (currentPosition + 1 == steps || dice_1 == dice_2)
+                return MoveCase.Movable;
+            else
+                return MoveCase.Immovable;
+        }
 
         for (int i = 0; i < steps; i++)
         {
@@ -216,6 +262,7 @@ public class GameState:MonoBehaviour
         int dice_1 = Dice1 + 1;
         int dice_2 = Dice2 + 1;
         int currentPosition = Instance.HorsePosition[horseNumber];
+        HorseColor horseColor = GetHorseColor(horseNumber);
 
         // If horse is in the base
         if (Instance.HorsePosition[horseNumber] >= 900)
@@ -224,32 +271,37 @@ public class GameState:MonoBehaviour
                (dice_1 == 6 && dice_2 == 1) ||
                (dice_1 == 1 && dice_2 == 6))
             {
-                // If there is another horse at start position
-                if (Instance.HorsePosition.Contains(PositionControl.GetStartPosition(GetHorseColor(horseNumber))))
-                {
-                    int startPosition = PositionControl.GetStartPosition(GetHorseColor(horseNumber));
-                    KillHorse(FindHorseAt(startPosition));
-                }
 
-                // Horse Start
-                Instance.HorsePosition[horseNumber] = PositionControl.GetStartPosition(GetHorseColor(horseNumber));
+                int startPosition = PositionControl.GetStartPosition(horseColor);
+                // If there is another horse at start position
+                if (Instance.HorsePosition.Contains(startPosition))
+                {
+                    if (GetHorseColor(FindHorseAt(startPosition)) != horseColor)
+                    {
+                        KillHorse(FindHorseAt(startPosition));
+                        // Horse Start
+                        Instance.HorsePosition[horseNumber] = PositionControl.GetStartPosition(GetHorseColor(horseNumber));
+                    }
+                }
+                else
+                    // Horse Start
+                    Instance.HorsePosition[horseNumber] = PositionControl.GetStartPosition(GetHorseColor(horseNumber));
             }
         }
         else // If horse is not in the base
         {
             int targetPosition = PositionControl.GetTargetPosition(horseNumber, dice_1 + dice_2);
             Debug.Log("Target : " + targetPosition);
-            Debug.Log(CheckMoveCase(horseNumber, dice_1 + dice_2));
+            Debug.Log(CheckMoveCase(horseNumber, dice_1, dice_2));
 
-            switch (CheckMoveCase(horseNumber, dice_1 + dice_2))
+            switch (CheckMoveCase(horseNumber, dice_1, dice_2))
             {
                 case MoveCase.Movable:
                     // If horse is in the cage
-                    // TODO: implement logic for double dice, in cage...
-                    if (currentPosition > 47)
+                    if (currentPosition > 47 && currentPosition < 900)
                     {
-                        if (Instance.HorsePosition[horseNumber] % 100 == dice_1 + dice_2)
-                            Instance.HorsePosition[horseNumber] = targetPosition;
+                        if ((currentPosition + 1) % 100 == dice_1 + dice_2 || dice_1 == dice_2)
+                            Instance.HorsePosition[horseNumber] = PositionControl.GetNextPosition(horseColor, currentPosition);
                     }
                     else
                         // Move horse to target
@@ -262,8 +314,33 @@ public class GameState:MonoBehaviour
                         Instance.HorsePosition[horseNumber] = targetPosition;
                     }
                     break;
+                case MoveCase.Immovable:
+                    if (dice_1 == dice_2 && currentPosition <= 47)
+                    {
+                        MoveCase move = CheckMoveCase(horseNumber, (dice_1 + dice_2) / 2);
+                        if (move != MoveCase.Immovable)
+                        {
+                            int target = PositionControl.GetTargetPosition(horseNumber, (dice_1 + dice_2) / 2);
+                            if (move == MoveCase.Attackable)
+                                KillHorse(FindHorseAt(target));
+                            Instance.HorsePosition[horseNumber] = target;
+                        }
+                    }
+                    break;
             }
         }
+    }
+
+    public void CheckWinner()
+    {
+        if (Instance.HorsePosition.Contains(106) && Instance.HorsePosition.Contains(105) && Instance.HorsePosition.Contains(104) && Instance.HorsePosition.Contains(103))
+            Instance.Winner = HorseColor.Red;
+        else if (Instance.HorsePosition.Contains(206) && Instance.HorsePosition.Contains(205) && Instance.HorsePosition.Contains(204) && Instance.HorsePosition.Contains(203))
+            Instance.Winner = HorseColor.Blue;
+        else if (Instance.HorsePosition.Contains(306) && Instance.HorsePosition.Contains(305) && Instance.HorsePosition.Contains(304) && Instance.HorsePosition.Contains(303))
+            Instance.Winner = HorseColor.Green;
+        else if (Instance.HorsePosition.Contains(406) && Instance.HorsePosition.Contains(405) && Instance.HorsePosition.Contains(404) && Instance.HorsePosition.Contains(403))
+            Instance.Winner = HorseColor.Yellow;
     }
 
     // Constructor and property to get singleton instance
