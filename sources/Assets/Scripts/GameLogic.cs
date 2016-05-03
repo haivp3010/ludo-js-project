@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 
 public enum HorseColor
@@ -89,7 +90,7 @@ public class PositionControl
     }
 }
 
-public class GameState
+public class GameState:MonoBehaviour
 {
     public static int Dice1;
     public static int Dice2;
@@ -176,6 +177,7 @@ public class GameState
         for (int i = 0; i < steps; i++)
         {
             currentPosition = PositionControl.GetNextPosition(horseColor, currentPosition);
+            
             if (currentPosition == -1)
                 return MoveCase.Immovable;
             if (Instance.HorsePosition.Contains(currentPosition))

@@ -39,8 +39,18 @@ public class HorseControl : MonoBehaviour
                 Anim.enabled = true;
                 int nextPosition = PositionControl.GetNextPosition(horseColor, horsePosition);
                 gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, PositionControl.GetRealPosition(nextPosition), step);
+                
                 if (gameObject.transform.position == PositionControl.GetRealPosition(nextPosition))
+                {
                     horsePosition = nextPosition;
+                    if (horsePosition == 12 || horsePosition == 17 || horsePosition == 23 || horsePosition == 35 || horsePosition == 41 || horsePosition == 46)
+                    {
+                        gameObject.transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y);
+                    }
+                }
+                    
+                
+               
             }
         }
     }
