@@ -231,7 +231,7 @@ public class GameState
             int count = 0;
             for (int j = 0; j < NUMBER_OF_HORSES; j++)
             {
-                if (PositionControl.GetRealPosition(HorsePosition[i]).y > PositionControl.GetRealPosition(HorsePosition[j]).y)
+                if (PositionControl.GetRealPosition(HorsePosition[i]).y < PositionControl.GetRealPosition(HorsePosition[j]).y)
                     count++;
             }
             SortingOrder[i] = count;

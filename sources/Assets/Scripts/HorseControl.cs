@@ -25,6 +25,8 @@ public class HorseControl : MonoBehaviour
 
     void Update()
     {
+        GameState.Instance.UpdateSortingOrder();
+        GetComponent<Renderer>().sortingOrder = GameState.Instance.SortingOrder[horseNumber];
         // Only current player can click on horses
         if (horseColor != GameState.Instance.CurrentPlayer)
             gameObject.GetComponent<PolygonCollider2D>().enabled = false;
