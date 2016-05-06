@@ -18,13 +18,14 @@ public class HorseControl : MonoBehaviour
         horseColor = GameState.GetHorseColor(horseNumber);
         horsePosition = PositionControl.GetSpawnPosition(horseNumber);
         gameObject.transform.position = PositionControl.GetRealPosition(horsePosition);
-
+        
         // Initialize GameState
         GameState.Instance.HorsePosition[horseNumber] = horsePosition;
     }
 
     void Update()
     {
+        GameState.Instance.CurrentYValues[horseNumber] = transform.position.y;   
         GameState.Instance.UpdateSortingOrder();
         GetComponent<Renderer>().sortingOrder = GameState.Instance.SortingOrder[horseNumber];
         // Only current player can click on horses

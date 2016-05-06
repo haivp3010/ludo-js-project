@@ -120,6 +120,7 @@ public class GameState
     private bool _diceRolled = false;
     private MoveCase[] _movable = new MoveCase[16];
     private List<int> sortingOrder = new List<int>();
+    private List<float> currentYValues = new List<float>();
 
     // Properties
     public HorseColor CurrentPlayer
@@ -204,6 +205,18 @@ public class GameState
             sortingOrder = value;
         }
     }
+    public List<float> CurrentYValues
+    {
+        get
+        {
+            return currentYValues;
+        }
+
+        set
+        {
+            currentYValues = value;
+        }
+    }
 
 
     // Methods
@@ -231,7 +244,7 @@ public class GameState
             int count = 0;
             for (int j = 0; j < NUMBER_OF_HORSES; j++)
             {
-                if (PositionControl.GetRealPosition(HorsePosition[i]).y < PositionControl.GetRealPosition(HorsePosition[j]).y)
+                if (CurrentYValues[i] < CurrentYValues[j])
                     count++;
             }
             SortingOrder[i] = count;
@@ -245,8 +258,8 @@ public class GameState
         int currentPosition = HorsePosition[horseNumber];
         HorseColor horseColor = GetHorseColor(horseNumber);
 
-        // If horse in the base, cannot move
-        if (currentPosition >= 900)
+        // If horse in the base or in the cage, cannot move
+        if (currentPosition > 47)
             return MoveCase.Immovable;
 
         for (int i = 0; i < steps; i++)
@@ -286,6 +299,10 @@ public class GameState
         // Horse is in the cage
         if (currentPosition > 47 && currentPosition < 900)
         {
+            // If horse is at the final position
+            if (currentPosition % 100 == 6)
+                return MoveCase.Immovable;
+
             if ((currentPosition + 1) % 100 == steps || dice_1 == dice_2)
                 return MoveCase.Movable;
             else
@@ -471,6 +488,7 @@ public class GameState
         {
             horsePosition.Add(0);
             SortingOrder.Add(0);
+            currentYValues.Add(0);
         }
     }
     public static GameState Instance
