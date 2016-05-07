@@ -121,6 +121,7 @@ public class GameState
     private MoveCase[] _movable = new MoveCase[16];
     private List<int> sortingOrder = new List<int>();
     private List<float> currentYValues = new List<float>();
+    private bool audio = true;
 
     // Properties
     public HorseColor CurrentPlayer
@@ -215,6 +216,18 @@ public class GameState
         set
         {
             currentYValues = value;
+        }
+    }
+    public bool Audio
+    {
+        get
+        {
+            return audio;
+        }
+
+        set
+        {
+            audio = value;
         }
     }
 
