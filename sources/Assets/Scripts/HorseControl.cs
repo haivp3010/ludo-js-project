@@ -94,19 +94,15 @@ public class HorseControl : MonoBehaviour
                         if (gameObject.transform.position == PositionControl.GetRealPosition(nextPosition))
                         {
                             horsePosition = nextPosition;
-                            if (horsePosition == 12 || horsePosition == 17 || horsePosition == 23 || horsePosition == 35 || horsePosition == 41 || horsePosition == 46)
+                            if (horsePosition==47 || horsePosition <= 12 || (horsePosition >= 17 && horsePosition < 23) || (horsePosition >= 35 && horsePosition < 41) || (horsePosition >= 901 && horsePosition <= 904) || (horsePosition >= 909 && horsePosition <= 912) || (horsePosition >= 101 && horsePosition <= 106) || (horsePosition >= 119 && horsePosition <= 124))
                             {
-                                gameObject.transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y);
+                                GetComponent<SpriteRenderer>().flipX = true;
                             }
-                            //if (GameState.Instance.Movable[horseNumber] == MoveCase.Attackable)
-                            //{
-                            //    if (PositionControl.GetNextPosition(horseColor, horsePosition) == GameState.Instance.HorsePosition[horseNumber])
-                            //    //if (horsePosition == GameState.Instance.HorsePosition[horseNumber] - 1)
-                            //    {
-                                    
-                            //        StartCoroutine(updateOff());                            
-                            //    }
-                            //}
+                            if ((horsePosition > 12 && horsePosition < 17) || (horsePosition >= 23 && horsePosition < 35) || (horsePosition >= 41 && horsePosition < 46) || (horsePosition >= 905 && horsePosition <= 908) || (horsePosition >= 913 && horsePosition <= 916) || (horsePosition >= 107 && horsePosition <= 112) || (horsePosition >= 113 && horsePosition <=118)) 
+                            {
+                                GetComponent<SpriteRenderer>().flipX = false;
+                            }
+
                             Anim.enabled = false;
 
 
