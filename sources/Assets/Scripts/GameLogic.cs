@@ -386,7 +386,7 @@ public class GameState
             if (CheckMoveCase(i, Dice1 + 1, Dice2 + 1) == MoveCase.Immovable)
             {
                 if (Dice1 == Dice2)
-                    _movable[i] = CheckMoveCase(i, (Dice1 + Dice2) / 2);
+                    _movable[i] = CheckMoveCase(i, Dice1 + 1);
                 else
                     _movable[i] = MoveCase.Immovable;
             }

@@ -97,8 +97,8 @@ public class Dice : MonoBehaviour
             GameState.Dice2 = Random.Range(0, 5);
 
             // Ensure the 80% chance of different dice
-            while (GameState.Dice2 == GameState.Dice1)
-                GameState.Dice2 = Random.Range(0, 5);
+            //while (GameState.Dice2 == GameState.Dice1)
+            //    GameState.Dice2 = Random.Range(0, 5);
         }
 
         GameState.Instance.DiceRolled = true;

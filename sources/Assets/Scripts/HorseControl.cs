@@ -95,15 +95,10 @@ public class HorseControl : MonoBehaviour
                         {
                             horsePosition = nextPosition;
 
-                            if (horsePosition==47 || horsePosition <= 12 || (horsePosition >= 17 && horsePosition < 23) || (horsePosition >= 35 && horsePosition < 41) || (horsePosition >= 901 && horsePosition <= 904) || (horsePosition >= 909 && horsePosition <= 912) || (horsePosition >= 101 && horsePosition <= 106) || (horsePosition >= 119 && horsePosition <= 124))
-                            {
+                            if ((horsePosition >= 0 && horsePosition <= 11) || (horsePosition >= 17 && horsePosition <= 21) || (horsePosition >= 35 && horsePosition <= 40) || horsePosition == 46 || horsePosition == 47 || (horsePosition >= 900 && horsePosition <= 903) || (horsePosition >= 912 && horsePosition <= 915))
                                 GetComponent<SpriteRenderer>().flipX = true;
-                            }
-
-                            if ((horsePosition > 12 && horsePosition < 17) || (horsePosition >= 23 && horsePosition < 35) || (horsePosition >= 41 && horsePosition < 46) || (horsePosition >= 905 && horsePosition <= 908) || (horsePosition >= 913 && horsePosition <= 916) || (horsePosition >= 107 && horsePosition <= 112) || (horsePosition >= 113 && horsePosition <=118)) 
-                            {
+                            else
                                 GetComponent<SpriteRenderer>().flipX = false;
-                            }
 
                             Anim.enabled = false;
 
@@ -145,7 +140,7 @@ public class HorseControl : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!GameState.Instance.HorseMoving && GameState.Instance.DiceRolled)
+        if (!GameState.Instance.HorseMoving && GameState.Instance.DiceRolled && GameState.Instance.Movable[horseNumber] != MoveCase.Immovable)
         {
             GameState.Instance.HorseMoving = true;
             GameState.Instance.ProcessDice(horseNumber);
