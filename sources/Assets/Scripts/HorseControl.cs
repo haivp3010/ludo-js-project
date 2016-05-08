@@ -145,7 +145,7 @@ public class HorseControl : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!GameState.Instance.HorseMoving)
+        if (!GameState.Instance.HorseMoving && GameState.Instance.DiceRolled)
         {
             GameState.Instance.HorseMoving = true;
             GameState.Instance.ProcessDice(horseNumber);
