@@ -95,8 +95,7 @@ public class GameState
     public static int Dice1;
     public static int Dice2;
     public static bool AnimatingDice;
-    
-
+    public static bool AttackingHorse;
     // Singleton Instance
     private static GameState _instance = new GameState();
 
@@ -393,12 +392,12 @@ public class GameState
         }
     }
 
-    private void KillHorse(int horseNumber)
+    public void KillHorse(int horseNumber)
     {
         HorsePosition[horseNumber] = PositionControl.GetSpawnPosition(horseNumber);
     }
 
-    private int FindHorseAt(int position)
+    public int FindHorseAt(int position)
     {
         return HorsePosition.FindIndex(pos => pos == position);
     }
@@ -469,7 +468,10 @@ public class GameState
                         {
                             int target = PositionControl.GetTargetPosition(horseNumber, (dice_1 + dice_2) / 2);
                             if (move == MoveCase.Attackable)
+                            {
                                 KillHorse(FindHorseAt(target));
+                                Movable[horseNumber] = MoveCase.Attackable;
+                            }
                             HorsePosition[horseNumber] = target;
                         }
                     }
