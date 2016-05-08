@@ -1,0 +1,361 @@
+fileFormatVersion: 2
+guid: 2176e55245f29e5419b074f98beca8a0
+timeCreated: 1462503715
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: green_atk_0
+    21300002: green_atk_1
+    21300004: green_atk_2
+    21300006: green_atk_3
+    21300008: green_atk_4
+    21300010: green_atk_5
+    21300012: green_atk_6
+    21300014: green_atk_7
+    21300016: green_atk_8
+    21300018: green_atk_9
+    21300020: green_atk_10
+    21300022: green_atk_11
+    21300024: green_atk_12
+    21300026: green_atk_13
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: green_atk_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 228
+        width: 76
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 12, y: 15}
+        - {x: 4, y: 19}
+        - {x: -8, y: 19}
+        - {x: -13, y: 14}
+        - {x: -14, y: 8}
+        - {x: -14, y: -14}
+        - {x: -12, y: -17}
+        - {x: 9, y: -17}
+        - {x: 16, y: -8}
+        - {x: 16, y: 4}
+    - name: green_atk_1
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 228
+        width: 76
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 5, y: 20}
+        - {x: -19, y: 20}
+        - {x: -19, y: -16}
+        - {x: -16, y: -17}
+        - {x: 18, y: -17}
+        - {x: 19, y: -12}
+        - {x: 19, y: 11}
+    - name: green_atk_2
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 228
+        width: 76
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 5, y: 21}
+        - {x: -21, y: 21}
+        - {x: -21, y: 3}
+        - {x: -16, y: -14}
+        - {x: -9, y: -17}
+        - {x: 14, y: -17}
+        - {x: 18, y: -13}
+        - {x: 18, y: 4}
+        - {x: 15, y: 14}
+    - name: green_atk_3
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 228
+        width: 76
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 5, y: 21}
+        - {x: -21, y: 21}
+        - {x: -21, y: 3}
+        - {x: -16, y: -14}
+        - {x: -9, y: -17}
+        - {x: 14, y: -17}
+        - {x: 18, y: -13}
+        - {x: 18, y: 4}
+        - {x: 15, y: 14}
+    - name: green_atk_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 152
+        width: 76
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 5, y: 21}
+        - {x: -21, y: 21}
+        - {x: -21, y: 3}
+        - {x: -16, y: -14}
+        - {x: -9, y: -17}
+        - {x: 14, y: -17}
+        - {x: 18, y: -13}
+        - {x: 18, y: 4}
+        - {x: 15, y: 14}
+    - name: green_atk_5
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 152
+        width: 76
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -30, y: 20}
+        - {x: -30, y: 1}
+        - {x: -13, y: -17}
+        - {x: 11, y: -17}
+        - {x: 14, y: -10}
+        - {x: 14, y: 18}
+        - {x: 13, y: 20}
+    - name: green_atk_6
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 152
+        width: 76
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -23, y: 21}
+        - {x: -32, y: 16}
+        - {x: -32, y: 4}
+        - {x: -18, y: -16}
+        - {x: -16, y: -17}
+        - {x: 10, y: -17}
+        - {x: 13, y: -7}
+        - {x: 13, y: 14}
+        - {x: 6, y: 21}
+    - name: green_atk_7
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 152
+        width: 76
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -3, y: 20}
+        - {x: -13, y: 20}
+        - {x: -30, y: 16}
+        - {x: -35, y: 12}
+        - {x: -35, y: 0}
+        - {x: -18, y: -17}
+        - {x: 10, y: -17}
+        - {x: 12, y: -16}
+        - {x: 12, y: 9}
+        - {x: 2, y: 19}
+    - name: green_atk_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 76
+        width: 76
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -22, y: 21}
+        - {x: -22, y: 12}
+        - {x: -19, y: 11}
+        - {x: -17, y: -8}
+        - {x: -13, y: -17}
+        - {x: -9, y: -18}
+        - {x: 32, y: -18}
+        - {x: 32, y: 12}
+        - {x: 17, y: 21}
+    - name: green_atk_9
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 76
+        width: 76
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -14, y: -18}
+        - {x: 31, y: -18}
+        - {x: 31, y: 8}
+        - {x: 27, y: 20}
+        - {x: 0, y: 20}
+        - {x: -14, y: 14}
+      - - {x: -10, y: 15}
+        - {x: -7, y: 16}
+        - {x: -7, y: 19}
+        - {x: -10, y: 20}
+        - {x: -12, y: 18}
+      - - {x: -6, y: 19}
+        - {x: -5, y: 16}
+        - {x: 0, y: 16}
+        - {x: 2, y: 18}
+        - {x: 1, y: 21}
+        - {x: -4, y: 21}
+    - name: green_atk_10
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 76
+        width: 76
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 20, y: 10}
+        - {x: 21, y: 14}
+        - {x: 15, y: 15}
+        - {x: -13, y: 15}
+        - {x: -14, y: 12}
+        - {x: -14, y: -16}
+        - {x: -11, y: -18}
+        - {x: 31, y: -18}
+        - {x: 31, y: 5}
+        - {x: 23, y: 11}
+      - - {x: 15, y: 11}
+        - {x: 18, y: 12}
+        - {x: 18, y: 15}
+        - {x: 15, y: 16}
+        - {x: 13, y: 14}
+    - name: green_atk_11
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 76
+        width: 76
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -9, y: 15}
+        - {x: -14, y: 11}
+        - {x: -14, y: -15}
+        - {x: -8, y: -18}
+        - {x: 31, y: -18}
+        - {x: 31, y: 2}
+        - {x: 17, y: 15}
+    - name: green_atk_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 76
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -5, y: 16}
+        - {x: -12, y: 9}
+        - {x: -13, y: 5}
+        - {x: -13, y: -16}
+        - {x: -5, y: -19}
+        - {x: 29, y: -19}
+        - {x: 29, y: 4}
+        - {x: 10, y: 16}
+    - name: green_atk_13
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 0
+        width: 76
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 12, y: 15}
+        - {x: 4, y: 19}
+        - {x: -8, y: 19}
+        - {x: -13, y: 14}
+        - {x: -14, y: 8}
+        - {x: -14, y: -14}
+        - {x: -12, y: -17}
+        - {x: 9, y: -17}
+        - {x: 16, y: -8}
+        - {x: 16, y: 4}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,261 @@
+fileFormatVersion: 2
+guid: d098c8c30f709ba489189e5e481bf6c3
+timeCreated: 1460990066
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: blue_0
+    21300002: blue_1
+    21300004: blue_2
+    21300006: blue_3
+    21300008: blue_4
+    21300010: blue_5
+    21300012: blue_6
+    21300014: blue_7
+    21300016: blue_8
+    21300018: blue_9
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: blue_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 146
+        width: 73
+        height: 73
+      alignment: 9
+      pivot: {x: 0.5, y: 0.6}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 14.5, y: 16.199997}
+        - {x: -14.5, y: 16.199997}
+        - {x: -16.5, y: 8.199997}
+        - {x: -16.5, y: -18.800003}
+        - {x: -11.5, y: -20.800003}
+        - {x: 22.5, y: -20.800003}
+        - {x: 27.5, y: -17.800003}
+        - {x: 29.5, y: -14.800003}
+        - {x: 29.5, y: -6.800003}
+    - name: blue_1
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 146
+        width: 73
+        height: 73
+      alignment: 9
+      pivot: {x: 0.5, y: 0.6}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -10.5, y: 18.199997}
+        - {x: -12.5, y: 13.199997}
+        - {x: -12.5, y: -17.800003}
+        - {x: -9.5, y: -20.800003}
+        - {x: 5.5, y: -20.800003}
+        - {x: 13.5, y: -18.800003}
+        - {x: 29.5, y: -8.800003}
+        - {x: 29.5, y: 9.199997}
+        - {x: 21.5, y: 18.199997}
+    - name: blue_2
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 146
+        width: 73
+        height: 73
+      alignment: 9
+      pivot: {x: 0.5, y: 0.6}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -10.5, y: 19.199997}
+        - {x: -12.5, y: 17.199997}
+        - {x: -12.5, y: -16.800003}
+        - {x: -9.5, y: -20.800003}
+        - {x: 5.5, y: -20.800003}
+        - {x: 13.5, y: -17.800003}
+        - {x: 29.5, y: -8.800003}
+        - {x: 29.5, y: 7.199997}
+        - {x: 16.5, y: 19.199997}
+    - name: blue_3
+      rect:
+        serializedVersion: 2
+        x: 219
+        y: 146
+        width: 73
+        height: 73
+      alignment: 9
+      pivot: {x: 0.5, y: 0.6}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -10.5, y: 18.199997}
+        - {x: -15.5, y: 16.199997}
+        - {x: -15.5, y: -20.800003}
+        - {x: 12.5, y: -20.800003}
+        - {x: 29.5, y: -16.800003}
+        - {x: 30.5, y: -14.800003}
+        - {x: 30.5, y: -6.800003}
+        - {x: 6.5, y: 18.199997}
+    - name: blue_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 73
+        width: 73
+        height: 73
+      alignment: 9
+      pivot: {x: 0.5, y: 0.6}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -16.5, y: 14.199997}
+        - {x: -17.5, y: 11.199997}
+        - {x: -17.5, y: -22.800003}
+        - {x: -9.5, y: -24.800003}
+        - {x: 1.5, y: -25.800003}
+        - {x: 28.5, y: -25.800003}
+        - {x: 28.5, y: -6.800003}
+        - {x: 12.5, y: 14.199997}
+    - name: blue_5
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 73
+        width: 73
+        height: 73
+      alignment: 9
+      pivot: {x: 0.5, y: 0.6}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -14.5, y: 12.199997}
+        - {x: -14.5, y: -19.800003}
+        - {x: -3.5, y: -28.800003}
+        - {x: 4.5, y: -31.800003}
+        - {x: 17.5, y: -31.800003}
+        - {x: 17.5, y: 4.199997}
+        - {x: 6.5, y: 16.199997}
+        - {x: -9.5, y: 16.199997}
+    - name: blue_6
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 73
+        width: 73
+        height: 73
+      alignment: 9
+      pivot: {x: 0.5, y: 0.6}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -15.5, y: 18.199997}
+        - {x: -15.5, y: -14.800003}
+        - {x: -12.5, y: -28.800003}
+        - {x: 1.5, y: -33.800003}
+        - {x: 7.5, y: -33.800003}
+        - {x: 10.5, y: -32.800003}
+        - {x: 15.5, y: -10.800003}
+        - {x: 15.5, y: 7.199997}
+        - {x: 8.5, y: 18.199997}
+    - name: blue_7
+      rect:
+        serializedVersion: 2
+        x: 219
+        y: 73
+        width: 73
+        height: 73
+      alignment: 9
+      pivot: {x: 0.5, y: 0.6}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 3.5, y: 19.199997}
+        - {x: -9.5, y: 19.199997}
+        - {x: -14.5, y: 15.199997}
+        - {x: -14.5, y: -20.800003}
+        - {x: 0.5, y: -32.800003}
+        - {x: 11.5, y: -32.800003}
+        - {x: 15.5, y: -8.800003}
+        - {x: 15.5, y: 11.199997}
+        - {x: 11.5, y: 16.199997}
+    - name: blue_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 73
+        height: 73
+      alignment: 9
+      pivot: {x: 0.5, y: 0.6}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -10.5, y: 18.199997}
+        - {x: -15.5, y: 7.199997}
+        - {x: -15.5, y: -19.800003}
+        - {x: 5.5, y: -29.800003}
+        - {x: 16.5, y: -29.800003}
+        - {x: 16.5, y: 8.199997}
+        - {x: 6.5, y: 18.199997}
+    - name: blue_9
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 0
+        width: 73
+        height: 73
+      alignment: 9
+      pivot: {x: 0.5, y: 0.6}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -16.5, y: 14.199997}
+        - {x: -17.5, y: 11.199997}
+        - {x: -17.5, y: -22.800003}
+        - {x: -9.5, y: -24.800003}
+        - {x: 1.5, y: -25.800003}
+        - {x: 28.5, y: -25.800003}
+        - {x: 28.5, y: -6.800003}
+        - {x: 12.5, y: 14.199997}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

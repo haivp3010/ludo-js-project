@@ -87,18 +87,18 @@ public class Dice : MonoBehaviour
         common = Random.Range(1, 6);                //1/5 khả năng 2 xx cùng giá tri
         if (common == 1)
         {
-            GameState.Dice1 = Random.Range(0, 6);
+            GameState.Dice1 = Random.Range(0, 5);
             GameState.Dice2 = GameState.Dice1;
 
         }
         else                                        //random xx
         {
-            GameState.Dice1 = Random.Range(0, 6);
-            GameState.Dice2 = Random.Range(0, 6);
+            GameState.Dice1 = Random.Range(0, 5);
+            GameState.Dice2 = Random.Range(0, 5);
 
             // Ensure the 80% chance of different dice
             while (GameState.Dice2 == GameState.Dice1)
-                GameState.Dice2 = Random.Range(0, 6);
+                GameState.Dice2 = Random.Range(0, 5);
         }
 
         GameState.Instance.DiceRolled = true;
