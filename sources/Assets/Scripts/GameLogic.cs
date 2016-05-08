@@ -315,6 +315,9 @@ public class GameState
             if (currentPosition % 100 == 6)
                 return MoveCase.Immovable;
 
+            if (FindHorseAt(currentPosition + 1) != -1)
+                return MoveCase.Immovable;
+
             if ((currentPosition + 1) % 100 == steps || dice_1 == dice_2)
                 return MoveCase.Movable;
             else
