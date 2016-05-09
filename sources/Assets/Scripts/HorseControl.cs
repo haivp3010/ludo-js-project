@@ -9,13 +9,13 @@ public class HorseControl : MonoBehaviour
     private int horsePosition;
     private HorseColor horseColor;
     private bool updateOn = true;
-    private PolygonCollider2D collider;
+    private PolygonCollider2D horseCollider;
 
     void Start()
     {
         // Get references
         Anim = GetComponent<Animator>();
-        collider = GetComponent<PolygonCollider2D>();
+        horseCollider = GetComponent<PolygonCollider2D>();
 
         // Get horse properties
         horseColor = GameState.GetHorseColor(horseNumber);
@@ -45,7 +45,7 @@ public class HorseControl : MonoBehaviour
 
             if (GameState.Instance.Winner != HorseColor.None && horsePosition == GameState.Instance.HorsePosition[horseNumber])
             {
-                collider.enabled = false;
+                horseCollider.enabled = false;
 
             }
             else
@@ -156,9 +156,9 @@ public class HorseControl : MonoBehaviour
     private void ColliderSetup()
     {
         if (horseColor != GameState.Instance.CurrentPlayer)
-            gameObject.GetComponent<PolygonCollider2D>().enabled = false;
+            horseCollider.enabled = false;
         else
-            gameObject.GetComponent<PolygonCollider2D>().enabled = true;
+            horseCollider.enabled = true;
     }
 
     private void OnMouseEnter()

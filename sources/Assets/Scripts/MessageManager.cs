@@ -15,14 +15,15 @@ public class MessageManager : MonoBehaviour {
         if (!GameState.Instance.Message.Equals(""))
         {
             Anim.enabled = true;
-            Anim.Play(GameState.Instance.Message, -1, 0f);
+            Anim.Play(GameState.Instance.Message);
+            //Anim.Play(GameState.Instance.Message);
             StartCoroutine(ResetMessage());
         }
 	}
 
     IEnumerator ResetMessage()
     {
-        yield return new WaitForSeconds(1.250f);
+        yield return new WaitForSeconds(Anim.GetCurrentAnimatorStateInfo(0).length);
         Anim.enabled = false;
         GameState.Instance.Message = "";
     }
