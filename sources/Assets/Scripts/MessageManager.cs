@@ -16,7 +16,6 @@ public class MessageManager : MonoBehaviour {
         {
             Anim.enabled = true;
             Anim.Play(GameState.Instance.Message);
-            //Anim.Play(GameState.Instance.Message);
             StartCoroutine(ResetMessage());
         }
 	}
@@ -24,6 +23,8 @@ public class MessageManager : MonoBehaviour {
     IEnumerator ResetMessage()
     {
         yield return new WaitForSeconds(Anim.GetCurrentAnimatorStateInfo(0).length);
+        // Reset animation
+        Anim.Play(GameState.Instance.Message, -1, 0f);
         Anim.enabled = false;
         GameState.Instance.Message = "";
     }
