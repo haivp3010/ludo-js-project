@@ -11,6 +11,6 @@ public class PlayerNotifier : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        GetComponent<Text>().text = "Current player: " + GameState.Instance.CurrentPlayer;
+        GetComponent<Animator>().Play(GameState.Instance.CurrentPlayer.ToString());
 	}
 }

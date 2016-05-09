@@ -62,7 +62,7 @@ public class Dice : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        if (!GameState.AnimatingDice && !GameState.Instance.DiceRolled)
+        if (!GameState.AnimatingDice && !GameState.Instance.DiceRolled && GameState.Instance.Message.Equals(""))
         {
             StartCoroutine(updateOff());                //khởi tạo coroutine, khi gọi hàm updateoff sẽ tắt animation trong 2 giây
             GameState.AnimatingDice = true;             //dùng GameState làm hàm trung gian, khi AnimatingDIce = true sẽ enable animation trong hàm update
@@ -103,12 +103,18 @@ public class Dice : MonoBehaviour
 
         GameState.Instance.DiceRolled = true;
         GameState.Instance.UpdateMovable();
+
+        if ((GameState.Dice1 == GameState.Dice2 || (GameState.Dice1 == 0 && GameState.Dice2 == 5) || (GameState.Dice1 == 5 && GameState.Dice2 == 0)))
+            GameState.Instance.Message = "Them Luot";
+
         if (GameState.Instance.NoHorseCanMove())
         {
             if (!(GameState.Dice1 == GameState.Dice2 || (GameState.Dice1 == 0 && GameState.Dice2 == 5) || (GameState.Dice1 == 5 && GameState.Dice2 == 0)))
             {
+                GameState.Instance.Message = "Mat Luot";
                 GameState.Instance.NextPlayer();
             }
+
             GameState.Instance.DiceRolled = false;
         }
 

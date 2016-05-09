@@ -121,6 +121,7 @@ public class GameState
     private List<int> sortingOrder = new List<int>();
     private List<float> currentYValues = new List<float>();
     private bool audio = true;
+    private string message = "";
 
     // Properties
     public HorseColor CurrentPlayer
@@ -229,7 +230,18 @@ public class GameState
             audio = value;
         }
     }
+    public string Message
+    {
+        get
+        {
+            return message;
+        }
 
+        set
+        {
+            message = value;
+        }
+    }
 
     // Methods
     public static HorseColor GetHorseColor(int horseNumber)
@@ -243,10 +255,10 @@ public class GameState
 
     public void NextPlayer()
     {
-        if (currentPlayer == HorseColor.Yellow)
-            currentPlayer = HorseColor.Red;
+        if (CurrentPlayer == HorseColor.Yellow)
+            CurrentPlayer = HorseColor.Red;
         else
-            currentPlayer++;
+            CurrentPlayer++;
     }
 
     public void UpdateSortingOrder()
@@ -381,9 +393,11 @@ public class GameState
 
     public void UpdateMovable()
     {
-        for (int i = (int)currentPlayer * 4; i < (int)currentPlayer * 4 + 4; i++)
+        for (int i = 0; i < NUMBER_OF_HORSES; i++)
         {
-            if (CheckMoveCase(i, Dice1 + 1, Dice2 + 1) == MoveCase.Immovable)
+            if (i / 4 != (int)CurrentPlayer)
+                Movable[i] = MoveCase.Immovable;
+            else if (CheckMoveCase(i, Dice1 + 1, Dice2 + 1) == MoveCase.Immovable)
             {
                 if (Dice1 == Dice2)
                     _movable[i] = CheckMoveCase(i, Dice1 + 1);
@@ -498,9 +512,14 @@ public class GameState
     // Constructor and property to get singleton instance
     private GameState()
     {
-        currentPlayer = HorseColor.Red;
-        horsePosition = new List<int>(NUMBER_OF_HORSES);
-        
+        ResetGameState();    
+    }
+
+    private void ResetGameState()
+    {
+        CurrentPlayer = HorseColor.Red;
+        HorsePosition = new List<int>(NUMBER_OF_HORSES);
+
         // Initialize list
         for (int i = 0; i < NUMBER_OF_HORSES; i++)
         {
@@ -508,7 +527,21 @@ public class GameState
             SortingOrder.Add(0);
             currentYValues.Add(0);
         }
+
+        for (int i = 0; i < NUMBER_OF_HORSES; i++)
+        {
+            HorsePosition[i] = PositionControl.GetSpawnPosition(i);
+            Movable[i] = MoveCase.Immovable;
+            SortingOrder[i] = 0;
+        }
+
+        HorseMoving = false;
+        Winner = HorseColor.None;
+        DiceRolled = false;
+        Audio = true;
+        Message = "";
     }
+
     public static GameState Instance
     {
         get { return _instance; }

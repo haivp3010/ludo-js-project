@@ -131,8 +131,6 @@ public class HorseControl : MonoBehaviour
         GameState.AttackingHorse = false;
         yield return new WaitForSeconds(1.5f);
         GameState.AttackingHorse = true;
-
-        //GameState.Instance.KillHorse(GameState.Instance.FindHorseAt(GameState.Instance.HorsePosition[horseNumber]));
         updateOn = true;
         Anim.Play("walk");
 
@@ -140,7 +138,9 @@ public class HorseControl : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!GameState.Instance.HorseMoving && GameState.Instance.DiceRolled && GameState.Instance.Movable[horseNumber] != MoveCase.Immovable)
+        Debug.Log(GameState.Instance.Message);
+        Debug.Log(GameState.Instance.Message.Equals(""));
+        if (!GameState.Instance.HorseMoving && GameState.Instance.DiceRolled && GameState.Instance.Movable[horseNumber] != MoveCase.Immovable && GameState.Instance.Message.Equals(""))
         {
             GameState.Instance.HorseMoving = true;
             GameState.Instance.ProcessDice(horseNumber);
