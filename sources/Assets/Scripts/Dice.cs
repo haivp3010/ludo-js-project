@@ -73,13 +73,9 @@ public class Dice : MonoBehaviour
 
     IEnumerator updateOff()                     //hàm updateoff() đã nói ở trên
     {
-        Debug.Log(Time.time);
-        yield return new WaitForSeconds(2.0f);      //tắt animation sau 2s
-        Debug.Log(Time.time);
+        yield return new WaitForSeconds(1.0f);      //tắt animation sau 2s
         updateOn = false;
         RollingDice();                                 //gọi hàm rollingdice để random animation tạo dice value
-        Debug.Log("dice1 value = " + (GameState.Dice1 + 1));
-        Debug.Log("dice2 value = " + (GameState.Dice2 + 1));
     }
 
     private void RollingDice()                      //random giá trị
