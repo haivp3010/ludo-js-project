@@ -5,15 +5,17 @@ using System.Collections.Generic;
 public class HorseControl : MonoBehaviour
 {
     public Animator Anim;
-    public float Speed;
     public int horseNumber; // 0 - 15
     private int horsePosition;
     private HorseColor horseColor;
     private bool updateOn = true;
+    private PolygonCollider2D collider;
+
     void Start()
     {
         // Get references
-        Anim = gameObject.GetComponent<Animator>();
+        Anim = GetComponent<Animator>();
+        collider = GetComponent<PolygonCollider2D>();
 
         // Get horse properties
         horseColor = GameState.GetHorseColor(horseNumber);
@@ -26,9 +28,9 @@ public class HorseControl : MonoBehaviour
 
     void Update()
     {
-        GameState.Instance.CurrentYValues[horseNumber] = transform.position.y;
-        GameState.Instance.UpdateSortingOrder();
-        GetComponent<Renderer>().sortingOrder = GameState.Instance.SortingOrder[horseNumber];
+
+        SortingOrder();
+        FlipHorses();
         // Only current player can click on horses
 
         if (updateOn == false)
@@ -39,18 +41,16 @@ public class HorseControl : MonoBehaviour
         }
         else
         {
-            if (horseColor != GameState.Instance.CurrentPlayer)
-                gameObject.GetComponent<PolygonCollider2D>().enabled = false;
-            else
-                gameObject.GetComponent<PolygonCollider2D>().enabled = true;
+            ColliderSetup();
+
             if (GameState.Instance.Winner != HorseColor.None && horsePosition == GameState.Instance.HorsePosition[horseNumber])
             {
-                gameObject.GetComponent<PolygonCollider2D>().enabled = false;
+                collider.enabled = false;
 
             }
             else
             {
-                var step = Speed * Time.deltaTime;
+                var step = GameState.Instance.HorseSpeed * Time.deltaTime;
 
                 if (horsePosition != GameState.Instance.HorsePosition[horseNumber])
                 {
@@ -94,14 +94,7 @@ public class HorseControl : MonoBehaviour
                         if (gameObject.transform.position == PositionControl.GetRealPosition(nextPosition))
                         {
                             horsePosition = nextPosition;
-
-                            if ((horsePosition >= 0 && horsePosition <= 11) || (horsePosition >= 17 && horsePosition <= 21) || (horsePosition >= 35 && horsePosition <= 40) || horsePosition == 46 || horsePosition == 47 || (horsePosition >= 900 && horsePosition <= 903) || (horsePosition >= 912 && horsePosition <= 915) || (horsePosition >= 101 && horsePosition <= 106) || (horsePosition >= 401 && horsePosition <= 406))
-                                GetComponent<SpriteRenderer>().flipX = true;
-                            else
-                                GetComponent<SpriteRenderer>().flipX = false;
-
                             Anim.enabled = false;
-
 
                             // If horse comes to target, change turn
                             if (horsePosition == GameState.Instance.HorsePosition[horseNumber])
@@ -138,8 +131,6 @@ public class HorseControl : MonoBehaviour
 
     private void OnMouseDown()
     {
-        Debug.Log(GameState.Instance.Message);
-        Debug.Log(GameState.Instance.Message.Equals(""));
         if (!GameState.Instance.HorseMoving && GameState.Instance.DiceRolled && GameState.Instance.Movable[horseNumber] != MoveCase.Immovable && GameState.Instance.Message.Equals(""))
         {
             GameState.Instance.HorseMoving = true;
@@ -147,7 +138,28 @@ public class HorseControl : MonoBehaviour
         }
     }
 
+    private void FlipHorses()
+    {
+        if ((horsePosition >= 0 && horsePosition <= 11) || (horsePosition >= 17 && horsePosition <= 21) || (horsePosition >= 35 && horsePosition <= 40) || horsePosition == 46 || horsePosition == 47 || (horsePosition >= 900 && horsePosition <= 903) || (horsePosition >= 912 && horsePosition <= 915) || (horsePosition >= 101 && horsePosition <= 106) || (horsePosition >= 401 && horsePosition <= 406))
+            GetComponent<SpriteRenderer>().flipX = true;
+        else
+            GetComponent<SpriteRenderer>().flipX = false;
+    }
 
+    private void SortingOrder()
+    {
+        GameState.Instance.CurrentYValues[horseNumber] = transform.position.y;
+        GameState.Instance.UpdateSortingOrder();
+        GetComponent<Renderer>().sortingOrder = GameState.Instance.SortingOrder[horseNumber];
+    }
+
+    private void ColliderSetup()
+    {
+        if (horseColor != GameState.Instance.CurrentPlayer)
+            gameObject.GetComponent<PolygonCollider2D>().enabled = false;
+        else
+            gameObject.GetComponent<PolygonCollider2D>().enabled = true;
+    }
 
     private void OnMouseEnter()
     {

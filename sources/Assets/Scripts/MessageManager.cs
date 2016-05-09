@@ -15,7 +15,7 @@ public class MessageManager : MonoBehaviour {
         if (!GameState.Instance.Message.Equals(""))
         {
             Anim.enabled = true;
-            Anim.Play(GameState.Instance.Message);
+            Anim.Play(GameState.Instance.Message, -1, 0f);
             StartCoroutine(ResetMessage());
         }
 	}

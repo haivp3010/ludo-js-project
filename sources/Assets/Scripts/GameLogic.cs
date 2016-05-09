@@ -122,6 +122,7 @@ public class GameState
     private List<float> currentYValues = new List<float>();
     private bool audio = true;
     private string message = "";
+    private float horseSpeed = 2.0f;
 
     // Properties
     public HorseColor CurrentPlayer
@@ -240,6 +241,18 @@ public class GameState
         set
         {
             message = value;
+        }
+    }
+    public float HorseSpeed
+    {
+        get
+        {
+            return horseSpeed;
+        }
+
+        set
+        {
+            horseSpeed = value;
         }
     }
 
