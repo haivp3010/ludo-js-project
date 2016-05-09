@@ -95,7 +95,7 @@ public class HorseControl : MonoBehaviour
                         {
                             horsePosition = nextPosition;
 
-                            if ((horsePosition >= 0 && horsePosition <= 11) || (horsePosition >= 17 && horsePosition <= 21) || (horsePosition >= 35 && horsePosition <= 40) || horsePosition == 46 || horsePosition == 47 || (horsePosition >= 900 && horsePosition <= 903) || (horsePosition >= 912 && horsePosition <= 915))
+                            if ((horsePosition >= 0 && horsePosition <= 11) || (horsePosition >= 17 && horsePosition <= 21) || (horsePosition >= 35 && horsePosition <= 40) || horsePosition == 46 || horsePosition == 47 || (horsePosition >= 900 && horsePosition <= 903) || (horsePosition >= 912 && horsePosition <= 915) || (horsePosition >= 101 && horsePosition <= 106) || (horsePosition >= 401 && horsePosition <= 406))
                                 GetComponent<SpriteRenderer>().flipX = true;
                             else
                                 GetComponent<SpriteRenderer>().flipX = false;
