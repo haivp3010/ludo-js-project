@@ -5,18 +5,12 @@ using System.Collections.Generic;
 public class Dice : MonoBehaviour
 {
     
-    private static int number = 10;
     public int diceIdentity;            //khai báo dice 1 hoặc dice 2
     public Animator anim;
     private SpriteRenderer spriteRenderer;
     private bool updateOn;
     public Sprite[] dice1;              //khai báo các sprite của dice để add
     private int common;
-    public int Number
-    {
-        get { return number; }
-        set { number = value; }
-    }
 
 
 
@@ -33,6 +27,9 @@ public class Dice : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Disable dice when one player wins
+        if (GameState.Instance.Winner != HorseColor.None)
+            GetComponent<BoxCollider2D>().enabled = false;
 
         if (GameState.AnimatingDice == true)            //nếu animatingdice = true
         {
@@ -72,14 +69,10 @@ public class Dice : MonoBehaviour
 
 
     IEnumerator updateOff()                     //hàm updateoff() đã nói ở trên
-    {
-        Debug.Log(Time.time);
-        yield return new WaitForSeconds(2.0f);      //tắt animation sau 2s
-        Debug.Log(Time.time);
+    {        
+        yield return new WaitForSeconds(1.0f);      //tắt animation sau 2s
         updateOn = false;
         RollingDice();                                 //gọi hàm rollingdice để random animation tạo dice value
-        Debug.Log("dice1 value = " + (GameState.Dice1 + 1));
-        Debug.Log("dice2 value = " + (GameState.Dice2 + 1));
     }
 
     private void RollingDice()                      //random giá trị
@@ -95,10 +88,6 @@ public class Dice : MonoBehaviour
         {
             GameState.Dice1 = Random.Range(0, 5);
             GameState.Dice2 = Random.Range(0, 5);
-
-            // Ensure the 80% chance of different dice
-            //while (GameState.Dice2 == GameState.Dice1)
-            //    GameState.Dice2 = Random.Range(0, 5);
         }
 
         GameState.Instance.DiceRolled = true;
@@ -120,7 +109,6 @@ public class Dice : MonoBehaviour
 
         anim.enabled = false;
         GameState.AnimatingDice = false;
-        Debug.Log("common = " + common);
     }
 
 

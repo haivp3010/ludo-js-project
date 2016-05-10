@@ -18,9 +18,18 @@ public class GlowManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        //
+        // If one player wins
+	    if (GameState.Instance.Winner != HorseColor.None)
+	    {
+            outlineEffect.outlineRenderers.Clear();
+            outlineEffect.outlineRenderers.Capacity = 0;
+
+            // Glowing winning horses
+            for (int i = (int) GameState.Instance.Winner * 4; i < (int)GameState.Instance.Winner * 4 + 4; i++)
+                outlineEffect.outlineRenderers.Add(horseRenderers[i]);
+        }
         // If dice are not rolled, glow at dice
-        if (!GameState.Instance.DiceRolled && !GameState.Instance.HorseMoving)
+        else if (!GameState.Instance.DiceRolled && !GameState.Instance.HorseMoving)
         {
             outlineEffect.outlineRenderers.Clear();
             outlineEffect.outlineRenderers.Capacity = 0;

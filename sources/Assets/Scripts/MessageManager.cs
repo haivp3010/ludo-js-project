@@ -14,9 +14,9 @@ public class MessageManager : MonoBehaviour {
 	void Update () {
         if (!GameState.Instance.Message.Equals(""))
         {
+            GetComponent<SpriteRenderer>().enabled = true;
             Anim.enabled = true;
             Anim.Play(GameState.Instance.Message);
-            //Anim.Play(GameState.Instance.Message);
             StartCoroutine(ResetMessage());
         }
 	}
@@ -25,6 +25,7 @@ public class MessageManager : MonoBehaviour {
     {
         yield return new WaitForSeconds(Anim.GetCurrentAnimatorStateInfo(0).length);
         Anim.enabled = false;
+        GetComponent<SpriteRenderer>().enabled = false;
         GameState.Instance.Message = "";
     }
 }

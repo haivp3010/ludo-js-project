@@ -28,6 +28,12 @@ public class HorseControl : MonoBehaviour
 
     void Update()
     {
+        // Disable non-players
+        if (horseNumber > (GameState.NUMBER_OF_PLAYERS) * 4 - 1)
+        {
+            GetComponent<SpriteRenderer>().enabled = false;
+            return;
+        }
 
         SortingOrder();
         FlipHorses();
