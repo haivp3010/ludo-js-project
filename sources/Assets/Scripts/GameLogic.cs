@@ -268,7 +268,7 @@ public class GameState
 
     public void NextPlayer()
     {
-        if (CurrentPlayer == (HorseColor) NUMBER_OF_PLAYERS - 1)
+        if (CurrentPlayer == HorseColor.Yellow)
             CurrentPlayer = HorseColor.Red;
         else
             CurrentPlayer++;
