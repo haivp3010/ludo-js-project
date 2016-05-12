@@ -11,6 +11,7 @@ public class Dice : MonoBehaviour
     private bool updateOn;
     public Sprite[] dice1;              //khai báo các sprite của dice để add
     private int common;
+    private BoxCollider2D diceCollider;
 
 
 
@@ -19,9 +20,7 @@ public class Dice : MonoBehaviour
     {
         anim = gameObject.GetComponent<Animator>();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-        //Random chance = new Random();
         anim.enabled = false;
-
     }
 
     // Update is called once per frame
@@ -29,37 +28,31 @@ public class Dice : MonoBehaviour
     {
         // Disable dice when one player wins
         if (GameState.Instance.Winner != HorseColor.None)
-            GetComponent<BoxCollider2D>().enabled = false;
-
-        if (GameState.AnimatingDice == true)            //nếu animatingdice = true
         {
-            anim.enabled = true;                        //thì enable animation cho tất cả object đc gắn script(dice 1 và 2)
-
+            enabled = false;
         }
         else
         {
-            anim.enabled = false;
-        }
-        if (updateOn != true)
-        {
-
-            if (diceIdentity == 1)
+            anim.enabled = GameState.AnimatingDice;
+            if (updateOn != true)
             {
-                spriteRenderer.sprite = dice1[GameState.Dice1];         //hiển thị giá trị cho dice 1
+
+                if (diceIdentity == 1)
+                {
+                    spriteRenderer.sprite = dice1[GameState.Dice1];         //hiển thị giá trị cho dice 1
+
+                }
+                else if (diceIdentity == 2)
+                {
+                    spriteRenderer.sprite = dice1[GameState.Dice2];         //hiển thị giá trị cho dice 2
+                }
 
             }
-            else if (diceIdentity == 2)
-            {
-                spriteRenderer.sprite = dice1[GameState.Dice2];         //hiển thị giá trị cho dice 2
-            }
-
         }
-
-
     }
     private void OnMouseDown()
     {
-        if (!GameState.AnimatingDice && !GameState.Instance.DiceRolled && GameState.Instance.Message.Equals(""))
+        if (!GameState.AnimatingDice && !GameState.Instance.DiceRolled && GameState.Instance.Message.Equals("") && GameState.Instance.Winner == HorseColor.None)
         {
             StartCoroutine(updateOff());                //khởi tạo coroutine, khi gọi hàm updateoff sẽ tắt animation trong 2 giây
             GameState.AnimatingDice = true;             //dùng GameState làm hàm trung gian, khi AnimatingDIce = true sẽ enable animation trong hàm update
