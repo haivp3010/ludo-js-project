@@ -83,7 +83,7 @@ public class PositionControl
 
         for (int i = 0; i < diceNumber; i++)
         {
-            targetPosition = GetNextPosition(GameState.GetHorseColor(horseNumber), targetPosition);
+            targetPosition = GetNextPosition(GameState.Instance.GetHorseColor(horseNumber), targetPosition);
         }
 
         return targetPosition;
@@ -100,9 +100,9 @@ public class GameState
     private static GameState _instance = new GameState();
 
     // Constants
-    public const int NUMBER_OF_PLAYERS = 4; // Red, Blue, Yellow, Green
+    public int NUMBER_OF_PLAYERS = 4; // Red, Blue, Yellow, Green
     public const int NUMBER_OF_HORSES_PER_PLAYER = 4;
-    public const int NUMBER_OF_HORSES = NUMBER_OF_PLAYERS * NUMBER_OF_HORSES_PER_PLAYER;
+    public int NUMBER_OF_HORSES = 0;
     /*
         Horse number:
         0  -  3 : Red
@@ -257,7 +257,7 @@ public class GameState
     }
 
     // Methods
-    public static HorseColor GetHorseColor(int horseNumber)
+    public HorseColor GetHorseColor(int horseNumber)
     {
         if ((horseNumber >= 0) && (horseNumber < NUMBER_OF_HORSES))
         {
@@ -528,11 +528,12 @@ public class GameState
         ResetGameState();    
     }
 
-    private void ResetGameState()
+    public void ResetGameState()
     {
+        NUMBER_OF_HORSES = NUMBER_OF_PLAYERS*NUMBER_OF_HORSES_PER_PLAYER;
         CurrentPlayer = HorseColor.Red;
         HorsePosition = new List<int>(NUMBER_OF_HORSES);
-
+        
         // Initialize list
         for (int i = 0; i < NUMBER_OF_HORSES; i++)
         {

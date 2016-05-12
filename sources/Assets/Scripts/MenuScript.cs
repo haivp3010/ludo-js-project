@@ -39,6 +39,7 @@ public class MenuScript : MonoBehaviour {
 
     public void StartGame()
     {
+        GameState.Instance.ResetGameState();
         SceneManager.LoadScene("ludo");
     }
     public void Quit ()
@@ -60,6 +61,7 @@ public class MenuScript : MonoBehaviour {
         {
             number--;
             decreaseButton.enabled = true;
+            GameState.Instance.NUMBER_OF_PLAYERS = number;
         }
         //else decreaseButton.enabled = false;
         numberPlayer.text = " " + number.ToString();
@@ -70,6 +72,7 @@ public class MenuScript : MonoBehaviour {
         {
             number++;
             increaseButton.enabled = true;
+            GameState.Instance.NUMBER_OF_PLAYERS = number;
         }
         //else increaseButton.enabled = false;
         numberPlayer.text = " " + number.ToString();

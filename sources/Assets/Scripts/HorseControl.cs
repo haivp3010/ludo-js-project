@@ -13,28 +13,32 @@ public class HorseControl : MonoBehaviour
 
     void Start()
     {
+
         // Get references
         Anim = GetComponent<Animator>();
         horseCollider = GetComponent<PolygonCollider2D>();
 
-        // Get horse properties
-        horseColor = GameState.GetHorseColor(horseNumber);
-        horsePosition = PositionControl.GetSpawnPosition(horseNumber);
-        gameObject.transform.position = PositionControl.GetRealPosition(horsePosition);
+        if (!IsPlayer())
+        {
+            horseCollider.enabled = false;
+            Anim.enabled = false;
+            GetComponent<SpriteRenderer>().enabled = false;
+            enabled = false;
+        }
+        else
+        {
+            // Get horse properties
+            horseColor = GameState.Instance.GetHorseColor(horseNumber);
+            horsePosition = PositionControl.GetSpawnPosition(horseNumber);
+            gameObject.transform.position = PositionControl.GetRealPosition(horsePosition);
 
-        // Initialize GameState
-        GameState.Instance.HorsePosition[horseNumber] = horsePosition;
+            // Initialize GameState
+            GameState.Instance.HorsePosition[horseNumber] = horsePosition;
+        }
     }
 
     void Update()
     {
-        // Disable non-players
-        if (horseNumber > (GameState.NUMBER_OF_PLAYERS) * 4 - 1)
-        {
-            GetComponent<SpriteRenderer>().enabled = false;
-            return;
-        }
-
         SortingOrder();
         FlipHorses();
         // Only current player can click on horses
@@ -119,10 +123,7 @@ public class HorseControl : MonoBehaviour
                 GameState.Instance.CheckWinner();
             }
         }
-
     }
-
-
 
     IEnumerator updateOff()
     {
@@ -165,6 +166,11 @@ public class HorseControl : MonoBehaviour
             horseCollider.enabled = false;
         else
             horseCollider.enabled = true;
+    }
+
+    private bool IsPlayer()
+    {
+        return horseNumber <= ((GameState.Instance.NUMBER_OF_PLAYERS) * 4 - 1);
     }
 
     private void OnMouseEnter()
