@@ -11,10 +11,7 @@ public class Dice : MonoBehaviour
     private bool updateOn;
     public Sprite[] dice1;              //khai báo các sprite của dice để add
     private int common;
-    private BoxCollider2D diceCollider;
-
-
-
+    
     // Use this for initialization
     void Start()
     {
@@ -33,6 +30,16 @@ public class Dice : MonoBehaviour
         }
         else
         {
+            GetComponent<PolygonCollider2D>().enabled = !GameState.Instance.IsBotTurn();
+
+            // Process Bot's turn
+            if (GameState.Instance.IsBotTurn() && !GameState.AnimatingDice && !GameState.Instance.HorseMoving && !GameState.AttackingHorse)
+            {
+                StartCoroutine(!GameState.Instance.Message.Equals("") ? Wait(2.25f) : Wait(1f));
+            }
+            
+            // End of Bot processing
+
             anim.enabled = GameState.AnimatingDice;
             if (updateOn != true)
             {
@@ -104,5 +111,9 @@ public class Dice : MonoBehaviour
         GameState.AnimatingDice = false;
     }
 
-
+    IEnumerator Wait(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        OnMouseDown();
+    }
 }

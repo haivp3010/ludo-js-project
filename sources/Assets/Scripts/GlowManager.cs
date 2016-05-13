@@ -33,8 +33,11 @@ public class GlowManager : MonoBehaviour {
         {
             outlineEffect.outlineRenderers.Clear();
             outlineEffect.outlineRenderers.Capacity = 0;
-            outlineEffect.outlineRenderers.Add(diceRenderers[0]);
-            outlineEffect.outlineRenderers.Add(diceRenderers[1]);
+            if (!GameState.Instance.IsBotTurn())
+            {
+                outlineEffect.outlineRenderers.Add(diceRenderers[0]);
+                outlineEffect.outlineRenderers.Add(diceRenderers[1]);
+            }
         }
         else if (!GameState.Instance.HorseMoving)
         {

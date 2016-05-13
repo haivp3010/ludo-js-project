@@ -85,15 +85,8 @@ public class HorseControl : MonoBehaviour
             //        horsePosition = 402;
             //        break;
             //}
-
-
-
-
-
             // End of debug
-
-
-
+            
             gameObject.transform.position = PositionControl.GetRealPosition(horsePosition);
 
             // Initialize GameState
@@ -117,6 +110,20 @@ public class HorseControl : MonoBehaviour
         {
             ColliderSetup();
 
+            // Bot processing
+            if (GameState.Instance.IsBotTurn() && horseColor == GameState.Instance.CurrentPlayer && !GameState.Instance.HorseMoving && !GameState.AttackingHorse)
+            {
+                horseCollider.enabled = false;
+
+                if (GameState.Instance.BotChoice() == horseNumber)
+                {
+                    StartCoroutine(Wait());
+                }
+            }
+
+            // End of Bot processing
+                
+
             if (GameState.Instance.Winner != HorseColor.None && horsePosition == GameState.Instance.HorsePosition[horseNumber])
             {
                 horseCollider.enabled = false;
@@ -132,7 +139,7 @@ public class HorseControl : MonoBehaviour
                     {
                         if (GameState.Instance.HorsePosition[horseNumber] >= 900)
                         {
-                            if (GameState.AttackingHorse == true)
+                            if (GameState.AttackingHorse)
                             {
                                 horsePosition = GameState.Instance.HorsePosition[horseNumber];
                                 gameObject.transform.position = PositionControl.GetRealPosition(horsePosition);
@@ -202,7 +209,7 @@ public class HorseControl : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!GameState.Instance.HorseMoving && GameState.Instance.DiceRolled && GameState.Instance.Movable[horseNumber] != MoveCase.Immovable && GameState.Instance.Message.Equals(""))
+        if (horseColor == GameState.Instance.CurrentPlayer && !GameState.Instance.HorseMoving && GameState.Instance.DiceRolled && GameState.Instance.Movable[horseNumber] != MoveCase.Immovable && GameState.Instance.Message.Equals(""))
         {
             GameState.Instance.HorseMoving = true;
             GameState.Instance.ProcessDice(horseNumber);
@@ -226,10 +233,7 @@ public class HorseControl : MonoBehaviour
 
     private void ColliderSetup()
     {
-        if (horseColor != GameState.Instance.CurrentPlayer)
-            horseCollider.enabled = false;
-        else
-            horseCollider.enabled = true;
+        horseCollider.enabled = horseColor == GameState.Instance.CurrentPlayer;
     }
 
     private bool IsPlayer()
@@ -245,5 +249,11 @@ public class HorseControl : MonoBehaviour
     private void OnMouseExit()
     {
         Anim.enabled = false;
+    }
+
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(1f);
+        OnMouseDown();
     }
 }

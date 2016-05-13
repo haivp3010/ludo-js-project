@@ -256,6 +256,10 @@ public class GameState
         }
     }
 
+    public List<HorseColor> Players { get; set; }
+
+    public List<HorseColor> Bots { get; set; }
+
     // Methods
     public HorseColor GetHorseColor(int horseNumber)
     {
@@ -522,6 +526,42 @@ public class GameState
             Instance.Winner = HorseColor.Yellow;
     }
 
+    public bool IsBotTurn()
+    {
+        return !Players.Contains(CurrentPlayer);
+    }
+
+    public int BotChoice()
+    {
+        List<int> possibleMoves = new List<int>();
+
+        for (int i = (int) CurrentPlayer*4; i < (int) CurrentPlayer*4 + 4; i++)
+        {
+            if (Movable[i] == MoveCase.Attackable)
+            {
+                return i;
+            }
+            else if (Movable[i] == MoveCase.Movable)
+            {
+                possibleMoves.Add(i);
+            }
+        }
+
+        if (possibleMoves.Count > 0)
+            return possibleMoves[Random.Range(0, possibleMoves.Count)];
+        return -1;
+    }
+
+    private void SampleDistribution()
+    {
+        Bots = new List<HorseColor>();
+        Players = new List<HorseColor>();
+        Players.Add(HorseColor.Red);
+        Bots.Add(HorseColor.Blue);
+        Bots.Add(HorseColor.Green);
+        Bots.Add(HorseColor.Yellow);
+    }
+
     // Constructor and property to get singleton instance
     private GameState()
     {
@@ -549,6 +589,9 @@ public class GameState
             SortingOrder[i] = 0;
         }
 
+        // Sample
+        SampleDistribution();
+        
         HorseMoving = false;
         Winner = HorseColor.None;
         DiceRolled = false;
