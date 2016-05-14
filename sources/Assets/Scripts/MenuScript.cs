@@ -3,36 +3,46 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
-public class MenuScript : MonoBehaviour {
-    
+public class MenuScript : MonoBehaviour
+{
+
     public Button playButton;
     public Button quitButton;
     public Button helpButton;
     public Button backButton;
-    public Button decreaseButton;
-    public Button increaseButton;
+    public Button decreasePlayerButton;
+    public Button increasePlayerButton;
+    public Button decreaseAIButton;
+    public Button increaseAIButton;
     public Canvas helpMenu;
     public Canvas playMenu;
     public Text numberPlayer;
-    private int number = 4;
-	// Use this for initialization
-	void Start () {
+    public Text numberAI;
+    private int numberP = 4;
+    private int numberA = 0;
+    // Use this for initialization
+    void Start()
+    {
         numberPlayer = numberPlayer.GetComponent<Text>();
+        numberAI = numberAI.GetComponent<Text>();
         playButton = playButton.GetComponent<Button>();
         quitButton = quitButton.GetComponent<Button>();
         helpButton = helpButton.GetComponent<Button>();
-        decreaseButton = decreaseButton.GetComponent<Button>();
-        increaseButton = increaseButton.GetComponent<Button>();
+        decreasePlayerButton = decreasePlayerButton.GetComponent<Button>();
+        increasePlayerButton = increasePlayerButton.GetComponent<Button>();
+        decreaseAIButton = decreaseAIButton.GetComponent<Button>();
+        increaseAIButton = increaseAIButton.GetComponent<Button>();
         helpMenu = helpMenu.GetComponent<Canvas>();
         playMenu = playMenu.GetComponent<Canvas>();
         helpMenu.enabled = false;
         playMenu.enabled = false;
-        
-        numberPlayer.text = " " +  number.ToString();
+        numberAI.text = " " + numberA.ToString();
+        numberPlayer.text = " " + numberP.ToString();
     }
-	
-	// Update is called once per frame
-	public void PlayMenu () {
+
+    // Update is called once per frame
+    public void PlayMenu()
+    {
         //SceneManager.LoadScene("ludo");
         playMenu.enabled = true;
     }
@@ -42,7 +52,7 @@ public class MenuScript : MonoBehaviour {
         GameState.Instance.ResetGameState();
         SceneManager.LoadScene("ludo");
     }
-    public void Quit ()
+    public void Quit()
     {
         Application.Quit();
     }
@@ -55,26 +65,44 @@ public class MenuScript : MonoBehaviour {
     {
         helpMenu.enabled = false;
     }
-    public void Decrease()
+    public void DecreasePlayer()
     {
-        if (number > 2 && number <=4)
+        if (numberP > 2 && numberP <= 4 && numberP > (numberA + 1))
         {
-            number--;
-            decreaseButton.enabled = true;
-            GameState.Instance.NUMBER_OF_PLAYERS = number;
+            numberP--;
+            decreasePlayerButton.enabled = true;
+            GameState.Instance.NUMBER_OF_PLAYERS = numberP;
         }
-        //else decreaseButton.enabled = false;
-        numberPlayer.text = " " + number.ToString();
+        //else decreasePlayerButton.enabled = false;
+        numberPlayer.text = " " + numberP.ToString();
     }
-    public void Increase()
+    public void IncreasePlayer()
     {
-        if (number < 4 && number >=2)
+        if (numberP < 4 && numberP >= 2)
         {
-            number++;
-            increaseButton.enabled = true;
-            GameState.Instance.NUMBER_OF_PLAYERS = number;
+            numberP++;
+            increasePlayerButton.enabled = true;
+            GameState.Instance.NUMBER_OF_PLAYERS = numberP;
         }
-        //else increaseButton.enabled = false;
-        numberPlayer.text = " " + number.ToString();
+        //else increasePlayerButton.enabled = false;
+        numberPlayer.text = " " + numberP.ToString();
+    }
+    public void IncreaseAI()
+    {
+        if (numberA < (numberP - 1) && numberA >= 0)        //at least 1 human player
+        {
+            numberA++;
+            increaseAIButton.enabled = true;
+        }
+        numberAI.text = " " + numberA.ToString();
+    }
+    public void DecreaseAI()
+    {
+        if (numberA > 0 && numberA < numberP)
+        {
+            numberA--;
+            decreaseAIButton.enabled = true;
+        }
+        numberAI.text = " " + numberA.ToString();
     }
 }
