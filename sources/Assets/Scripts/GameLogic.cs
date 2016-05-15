@@ -103,6 +103,7 @@ public class GameState
     public int NUMBER_OF_PLAYERS = 4; // Red, Blue, Yellow, Green
     public const int NUMBER_OF_HORSES_PER_PLAYER = 4;
     public int NUMBER_OF_HORSES = 0;
+    public int NUMBER_OF_BOTS = 0;
     /*
         Horse number:
         0  -  3 : Red
@@ -552,14 +553,18 @@ public class GameState
         return -1;
     }
 
-    private void SampleDistribution()
+    private void Distribute()
     {
         Bots = new List<HorseColor>();
         Players = new List<HorseColor>();
-        Players.Add(HorseColor.Red);
-        Bots.Add(HorseColor.Blue);
-        Bots.Add(HorseColor.Green);
-        Bots.Add(HorseColor.Yellow);
+
+        for (int i = 0; i < NUMBER_OF_PLAYERS; i++)
+        {
+            if (i < NUMBER_OF_PLAYERS - NUMBER_OF_BOTS)
+                Players.Add((HorseColor) i);
+            else
+                Bots.Add((HorseColor) i);
+        }
     }
 
     // Constructor and property to get singleton instance
@@ -590,7 +595,7 @@ public class GameState
         }
 
         // Sample
-        SampleDistribution();
+        Distribute();
         
         HorseMoving = false;
         Winner = HorseColor.None;

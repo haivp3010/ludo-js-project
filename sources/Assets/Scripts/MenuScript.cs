@@ -93,6 +93,7 @@ public class MenuScript : MonoBehaviour
         {
             numberA++;
             increaseAIButton.enabled = true;
+            GameState.Instance.NUMBER_OF_BOTS = numberA;
         }
         numberAI.text = " " + numberA.ToString();
     }
@@ -102,6 +103,7 @@ public class MenuScript : MonoBehaviour
         {
             numberA--;
             decreaseAIButton.enabled = true;
+            GameState.Instance.NUMBER_OF_BOTS = numberA;
         }
         numberAI.text = " " + numberA.ToString();
     }
