@@ -7,6 +7,7 @@ public class HelpBtn : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     public Sprite Normal;
     public Sprite OnHover;
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -15,7 +16,7 @@ public class HelpBtn : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-	
+        
 	}
 
     void OnMouseEnter()
