@@ -115,7 +115,7 @@ public class HorseControl : MonoBehaviour
             {
                 horseCollider.enabled = false;
 
-                if (GameState.Instance.BotChoice() == horseNumber)
+                if (GameState.Instance.BotChoice() == horseNumber && !GameState.AnimatingDice)
                 {
                     StartCoroutine(Wait());
                 }

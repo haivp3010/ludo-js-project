@@ -59,7 +59,7 @@ public class Dice : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        if (!GameState.AnimatingDice && !GameState.Instance.DiceRolled && GameState.Instance.Message.Equals("") && GameState.Instance.Winner == HorseColor.None)
+        if (!GameState.Instance.HorseMoving && !GameState.AttackingHorse && !GameState.AnimatingDice && !GameState.Instance.DiceRolled && GameState.Instance.Message.Equals("") && GameState.Instance.Winner == HorseColor.None)
         {
             StartCoroutine(updateOff());                //khởi tạo coroutine, khi gọi hàm updateoff sẽ tắt animation trong 2 giây
             GameState.AnimatingDice = true;             //dùng GameState làm hàm trung gian, khi AnimatingDIce = true sẽ enable animation trong hàm update

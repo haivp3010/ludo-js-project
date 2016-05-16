@@ -529,7 +529,7 @@ public class GameState
 
     public bool IsBotTurn()
     {
-        return !Players.Contains(CurrentPlayer);
+        return Bots.Contains(CurrentPlayer);
     }
 
     public int BotChoice()
@@ -576,7 +576,8 @@ public class GameState
     public void ResetGameState()
     {
         NUMBER_OF_HORSES = NUMBER_OF_PLAYERS*NUMBER_OF_HORSES_PER_PLAYER;
-        CurrentPlayer = HorseColor.Red;
+        //CurrentPlayer = HorseColor.Red;
+        CurrentPlayer = HorseColor.Blue;
         HorsePosition = new List<int>(NUMBER_OF_HORSES);
         
         // Initialize list
