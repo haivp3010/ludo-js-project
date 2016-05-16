@@ -43,7 +43,6 @@ public class MenuScript : MonoBehaviour
     // Update is called once per frame
     public void PlayMenu()
     {
-        //SceneManager.LoadScene("ludo");
         playMenu.enabled = true;
     }
 
