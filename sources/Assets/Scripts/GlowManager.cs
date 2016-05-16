@@ -24,9 +24,9 @@ public class GlowManager : MonoBehaviour {
             outlineEffect.outlineRenderers.Clear();
             outlineEffect.outlineRenderers.Capacity = 0;
 
-            // Glowing winning horses
-            for (int i = (int) GameState.Instance.Winner * 4; i < (int)GameState.Instance.Winner * 4 + 4; i++)
-                outlineEffect.outlineRenderers.Add(horseRenderers[i]);
+            //// Glowing winning horses
+            //for (int i = (int) GameState.Instance.Winner * 4; i < (int)GameState.Instance.Winner * 4 + 4; i++)
+            //    outlineEffect.outlineRenderers.Add(horseRenderers[i]);
         }
         // If dice are not rolled, glow at dice
         else if (!GameState.Instance.DiceRolled && !GameState.Instance.HorseMoving)

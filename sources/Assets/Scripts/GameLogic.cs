@@ -576,8 +576,7 @@ public class GameState
     public void ResetGameState()
     {
         NUMBER_OF_HORSES = NUMBER_OF_PLAYERS*NUMBER_OF_HORSES_PER_PLAYER;
-        //CurrentPlayer = HorseColor.Red;
-        CurrentPlayer = HorseColor.Blue;
+        CurrentPlayer = HorseColor.Red;
         HorsePosition = new List<int>(NUMBER_OF_HORSES);
         
         // Initialize list
@@ -595,7 +594,6 @@ public class GameState
             SortingOrder[i] = 0;
         }
 
-        // Sample
         Distribute();
         
         HorseMoving = false;
