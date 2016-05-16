@@ -261,6 +261,8 @@ public class GameState
 
     public List<HorseColor> Bots { get; set; }
 
+    public bool InGameHelp { get; set; }
+
     // Methods
     public HorseColor GetHorseColor(int horseNumber)
     {
@@ -601,6 +603,7 @@ public class GameState
         DiceRolled = false;
         Audio = true;
         Message = "";
+        InGameHelp = false;
     }
 
     public static GameState Instance

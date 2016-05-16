@@ -30,63 +30,63 @@ public class HorseControl : MonoBehaviour
             // Get horse properties
             horseColor = GameState.Instance.GetHorseColor(horseNumber);
             horsePosition = PositionControl.GetSpawnPosition(horseNumber);
-            
+
 
 
             /* DEBUG */
-            //switch (horseNumber)
-            //{
-            //    case 0:
-            //        horsePosition = 106;
-            //        break;
-            //    case 1:
-            //        horsePosition = 105;
-            //        break;
-            //    case 2:
-            //        horsePosition = 104;
-            //        break;
-            //    case 3:
-            //        horsePosition = 102;
-            //        break;
-            //    case 4:
-            //        horsePosition = 206;
-            //        break;
-            //    case 5:
-            //        horsePosition = 205;
-            //        break;
-            //    case 6:
-            //        horsePosition = 204;
-            //        break;
-            //    case 7:
-            //        horsePosition = 202;
-            //        break;
-            //    case 8:
-            //        horsePosition = 306;
-            //        break;
-            //    case 9:
-            //        horsePosition = 305;
-            //        break;
-            //    case 10:
-            //        horsePosition = 304;
-            //        break;
-            //    case 11:
-            //        horsePosition = 302;
-            //        break;
-            //    case 12:
-            //        horsePosition = 406;
-            //        break;
-            //    case 13:
-            //        horsePosition = 405;
-            //        break;
-            //    case 14:
-            //        horsePosition = 404;
-            //        break;
-            //    case 15:
-            //        horsePosition = 402;
-            //        break;
-            //}
+            switch (horseNumber)
+            {
+                case 0:
+                    horsePosition = 106;
+                    break;
+                case 1:
+                    horsePosition = 105;
+                    break;
+                case 2:
+                    horsePosition = 104;
+                    break;
+                case 3:
+                    horsePosition = 102;
+                    break;
+                case 4:
+                    horsePosition = 206;
+                    break;
+                case 5:
+                    horsePosition = 205;
+                    break;
+                case 6:
+                    horsePosition = 204;
+                    break;
+                case 7:
+                    horsePosition = 202;
+                    break;
+                case 8:
+                    horsePosition = 306;
+                    break;
+                case 9:
+                    horsePosition = 305;
+                    break;
+                case 10:
+                    horsePosition = 304;
+                    break;
+                case 11:
+                    horsePosition = 302;
+                    break;
+                case 12:
+                    horsePosition = 406;
+                    break;
+                case 13:
+                    horsePosition = 405;
+                    break;
+                case 14:
+                    horsePosition = 404;
+                    break;
+                case 15:
+                    horsePosition = 402;
+                    break;
+            }
             // End of debug
-            
+
             gameObject.transform.position = PositionControl.GetRealPosition(horsePosition);
 
             // Initialize GameState

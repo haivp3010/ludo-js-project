@@ -1,0 +1,106 @@
+fileFormatVersion: 2
+guid: c13bc54254c516348957c48e6a498269
+timeCreated: 1463415094
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: restart_btn_0
+    21300002: restart_btn_1
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: restart_btn_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 170
+        height: 170
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -37, y: 79}
+        - {x: -79, y: 66}
+        - {x: -79, y: -60}
+        - {x: -14, y: -79}
+        - {x: 48, y: -79}
+        - {x: 79, y: -72}
+        - {x: 79, y: 70}
+        - {x: 58, y: 79}
+      - - {x: 82, y: -17}
+        - {x: 84, y: -19}
+        - {x: 85, y: -19}
+        - {x: 85, y: 19}
+        - {x: 82, y: 18}
+    - name: restart_btn_1
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 0
+        width: 170
+        height: 170
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 43, y: 85}
+        - {x: -37, y: 85}
+        - {x: -60, y: 81}
+        - {x: -85, y: 47}
+        - {x: -85, y: -36}
+        - {x: -78, y: -65}
+        - {x: -49, y: -85}
+        - {x: 42, y: -85}
+        - {x: 61, y: -81}
+        - {x: 85, y: -46}
+        - {x: 85, y: 44}
+        - {x: 73, y: 61}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
