@@ -21,8 +21,7 @@ public class GlowManager : MonoBehaviour {
         // If one player wins
 	    if (GameState.Instance.Winner != HorseColor.None)
 	    {
-            outlineEffect.outlineRenderers.Clear();
-            outlineEffect.outlineRenderers.Capacity = 0;
+            GlowReset();
 
             //// Glowing winning horses
             //for (int i = (int) GameState.Instance.Winner * 4; i < (int)GameState.Instance.Winner * 4 + 4; i++)
@@ -31,8 +30,7 @@ public class GlowManager : MonoBehaviour {
         // If dice are not rolled, glow at dice
         else if (!GameState.Instance.DiceRolled && !GameState.Instance.HorseMoving)
         {
-            outlineEffect.outlineRenderers.Clear();
-            outlineEffect.outlineRenderers.Capacity = 0;
+            GlowReset();
             if (!GameState.Instance.IsBotTurn())
             {
                 outlineEffect.outlineRenderers.Add(diceRenderers[0]);
@@ -41,8 +39,7 @@ public class GlowManager : MonoBehaviour {
         }
         else if (!GameState.Instance.HorseMoving)
         {
-            outlineEffect.outlineRenderers.Clear();
-            outlineEffect.outlineRenderers.Capacity = 0;
+            GlowReset();
             for (int i = 0; i <= 15; i++)
             {
                 if (GameState.Instance.Movable[i] != MoveCase.Immovable)
@@ -53,8 +50,7 @@ public class GlowManager : MonoBehaviour {
         }
         else
         {
-            outlineEffect.outlineRenderers.Clear();
-            outlineEffect.outlineRenderers.Capacity = 0;
+            GlowReset();
         }
 
         GlowingEffect();
@@ -74,5 +70,11 @@ public class GlowManager : MonoBehaviour {
             Count -= Time.deltaTime * GlowingSpeed;
 
         outlineEffect.lineThickness = Count;
+    }
+
+    void GlowReset()
+    {
+        outlineEffect.outlineRenderers.Clear();
+        outlineEffect.outlineRenderers.Capacity = 0;
     }
 }

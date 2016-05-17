@@ -57,7 +57,7 @@ public class PositionControl
     }
 
     // Cage entrance list
-    private static SortedList<HorseColor, int> CageEntranceList = new SortedList<HorseColor, int>
+    private static readonly SortedList<HorseColor, int> CageEntranceList = new SortedList<HorseColor, int>
     {
         { HorseColor.Red, 47 },
         { HorseColor.Blue, 11 },
@@ -92,10 +92,7 @@ public class PositionControl
 
 public class GameState
 {
-    public static int Dice1;
-    public static int Dice2;
-    public static bool AnimatingDice;
-    public static bool AttackingHorse;
+    
     // Singleton Instance
     private static GameState _instance = new GameState();
 
@@ -104,165 +101,27 @@ public class GameState
     public const int NUMBER_OF_HORSES_PER_PLAYER = 4;
     public int NUMBER_OF_HORSES = 0;
     public int NUMBER_OF_BOTS = 0;
-    /*
-        Horse number:
-        0  -  3 : Red
-        4  -  7 : Blue
-        8  - 11 : Green
-        12 - 15 : Yellow
-    */
-
-    // Private variables
-    private HorseColor currentPlayer;
-    private List<int> horsePosition;
-    private bool _horseMoving;
-    private HorseColor _winner = HorseColor.None;
-    private bool _diceRolled = false;
-    private MoveCase[] _movable = new MoveCase[16];
-    private List<int> sortingOrder = new List<int>();
-    private List<float> currentYValues = new List<float>();
-    private bool audio = true;
-    private string message = "";
-    private float horseSpeed = 2.0f;
-
+    
     // Properties
-    public HorseColor CurrentPlayer
-    {
-        get
-        {
-            return currentPlayer;
-        }
-        set
-        {
-            currentPlayer = value;
-        }
-    }
-    public List<int> HorsePosition
-    {
-        get
-        {
-            return horsePosition;
-        }
-        set
-        {
-            horsePosition = value;
-        }
-    }
-    public bool HorseMoving
-    {
-        get
-        {
-            return _horseMoving;
-        }
-
-        set
-        {
-            _horseMoving = value;
-        }
-    }
-    public HorseColor Winner
-    {
-        get
-        {
-            return _winner;
-        }
-
-        set
-        {
-            _winner = value;
-        }
-    }
-    public bool DiceRolled
-    {
-        get
-        {
-            return _diceRolled;
-        }
-
-        set
-        {
-            _diceRolled = value;
-        }
-    }
-    public MoveCase[] Movable
-    {
-        get
-        {
-            return _movable;
-        }
-
-        set
-        {
-            _movable = value;
-        }
-    }
-    public List<int> SortingOrder
-    {
-        get
-        {
-            return sortingOrder;
-        }
-
-        set
-        {
-            sortingOrder = value;
-        }
-    }
-    public List<float> CurrentYValues
-    {
-        get
-        {
-            return currentYValues;
-        }
-
-        set
-        {
-            currentYValues = value;
-        }
-    }
-    public bool Audio
-    {
-        get
-        {
-            return audio;
-        }
-
-        set
-        {
-            audio = value;
-        }
-    }
-    public string Message
-    {
-        get
-        {
-            return message;
-        }
-
-        set
-        {
-            message = value;
-        }
-    }
-    public float HorseSpeed
-    {
-        get
-        {
-            return horseSpeed;
-        }
-
-        set
-        {
-            horseSpeed = value;
-        }
-    }
-
+    public int Dice1 { get; set; }
+    public int Dice2 { get; set; }
+    public bool AnimatingDice { get; set; }
+    public bool AttackingHorse { get; set; }
+    public HorseColor CurrentPlayer { get; set; }
+    public List<int> HorsePosition { get; set; }
+    public bool HorseMoving { get; set; }
+    public HorseColor Winner { get; set; }
+    public bool DiceRolled { get; set; }
+    public MoveCase[] Movable { get; set; }
+    public List<int> SortingOrder { get; set; }
+    public List<float> CurrentYValues { get; set; }
+    public bool Audio { get; set; }
+    public string Message { get; set; }
+    public float HorseSpeed { get; set; }
     public List<HorseColor> Players { get; set; }
-
     public List<HorseColor> Bots { get; set; }
-
     public bool InGameHelp { get; set; }
-
+    
     // Methods
     public HorseColor GetHorseColor(int horseNumber)
     {
@@ -360,9 +219,9 @@ public class GameState
         {
             if (dice_1 == dice_2 || (dice_1 == 6 && dice_2 == 1) || (dice_1 == 1 && dice_2 == 6))
             {
-                if (HorsePosition.Contains(PositionControl.GetStartPosition(currentPlayer)))
+                if (HorsePosition.Contains(PositionControl.GetStartPosition(CurrentPlayer)))
                 {
-                    if (GetHorseColor(FindHorseAt(PositionControl.GetStartPosition(currentPlayer))) != horseColor)
+                    if (GetHorseColor(FindHorseAt(PositionControl.GetStartPosition(CurrentPlayer))) != horseColor)
                         return MoveCase.Attackable;
                     else
                         return MoveCase.Immovable;
@@ -403,9 +262,9 @@ public class GameState
 
     public bool NoHorseCanMove()
     {
-        for (int i = (int)currentPlayer * 4; i < (int)currentPlayer * 4 + 4; i++)
+        for (int i = (int)CurrentPlayer * 4; i < (int)CurrentPlayer * 4 + 4; i++)
         {
-            if (_movable[i] != MoveCase.Immovable)
+            if (Movable[i] != MoveCase.Immovable)
                 return false;
         }
         return true;
@@ -420,12 +279,12 @@ public class GameState
             else if (CheckMoveCase(i, Dice1 + 1, Dice2 + 1) == MoveCase.Immovable)
             {
                 if (Dice1 == Dice2)
-                    _movable[i] = CheckMoveCase(i, Dice1 + 1);
+                    Movable[i] = CheckMoveCase(i, Dice1 + 1);
                 else
-                    _movable[i] = MoveCase.Immovable;
+                    Movable[i] = MoveCase.Immovable;
             }
             else
-                _movable[i] = CheckMoveCase(i, Dice1 + 1, Dice2 + 1);
+                Movable[i] = CheckMoveCase(i, Dice1 + 1, Dice2 + 1);
         }
     }
 
@@ -442,7 +301,7 @@ public class GameState
     public void ProcessDice(int horseNumber)
     {
         // If dice are not rolled, do nothing
-        if (!_diceRolled)
+        if (!DiceRolled)
             return;
 
         int dice_1 = Dice1 + 1;
@@ -572,7 +431,15 @@ public class GameState
     // Constructor and property to get singleton instance
     private GameState()
     {
-        ResetGameState();    
+        HorseSpeed = 2.0f;
+        Message = "";
+        Audio = true;
+        CurrentYValues = new List<float>();
+        SortingOrder = new List<int>();
+        Movable = new MoveCase[16];
+        DiceRolled = false;
+        Winner = HorseColor.None;
+        ResetGameState();
     }
 
     public void ResetGameState()
@@ -584,9 +451,9 @@ public class GameState
         // Initialize list
         for (int i = 0; i < NUMBER_OF_HORSES; i++)
         {
-            horsePosition.Add(0);
+            HorsePosition.Add(0);
             SortingOrder.Add(0);
-            currentYValues.Add(0);
+            CurrentYValues.Add(0);
         }
 
         for (int i = 0; i < NUMBER_OF_HORSES; i++)
@@ -604,6 +471,10 @@ public class GameState
         Audio = true;
         Message = "";
         InGameHelp = false;
+        AnimatingDice = false;
+        AttackingHorse = false;
+        Dice1 = 0;
+        Dice2 = 0;
     }
 
     public static GameState Instance

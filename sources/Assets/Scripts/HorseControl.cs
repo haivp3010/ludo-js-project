@@ -47,18 +47,18 @@ public class HorseControl : MonoBehaviour
         {
             Anim.enabled = true;
             Anim.Play("attack");
-            //GameState.AttackingHorse = true;
+            //GameState.Instance.AttackingHorse = true;
         }
         else
         {
             ColliderSetup();
 
             // Bot processing
-            if (GameState.Instance.IsBotTurn() && horseColor == GameState.Instance.CurrentPlayer && !GameState.Instance.HorseMoving && !GameState.AttackingHorse)
+            if (GameState.Instance.IsBotTurn() && horseColor == GameState.Instance.CurrentPlayer && !GameState.Instance.HorseMoving && !GameState.Instance.AttackingHorse)
             {
                 horseCollider.enabled = false;
 
-                if (GameState.Instance.BotChoice() == horseNumber && !GameState.AnimatingDice)
+                if (GameState.Instance.BotChoice() == horseNumber && !GameState.Instance.AnimatingDice)
                 {
                     StartCoroutine(Wait());
                 }
@@ -82,17 +82,17 @@ public class HorseControl : MonoBehaviour
                     {
                         if (GameState.Instance.HorsePosition[horseNumber] >= 900)
                         {
-                            if (GameState.AttackingHorse)
+                            if (GameState.Instance.AttackingHorse)
                             {
                                 horsePosition = GameState.Instance.HorsePosition[horseNumber];
                                 gameObject.transform.position = PositionControl.GetRealPosition(horsePosition);
-                                GameState.AttackingHorse = false;
+                                GameState.Instance.AttackingHorse = false;
                             }
                         }
                         else if (horsePosition >= 900)
                         {
                             if (GameState.Instance.Movable[horseNumber] == MoveCase.Attackable)
-                                GameState.AttackingHorse = true;
+                                GameState.Instance.AttackingHorse = true;
                             horsePosition = GameState.Instance.HorsePosition[horseNumber];
                             gameObject.transform.position = PositionControl.GetRealPosition(horsePosition);
                             GameState.Instance.HorseMoving = false;
@@ -124,7 +124,7 @@ public class HorseControl : MonoBehaviour
                             if (horsePosition == GameState.Instance.HorsePosition[horseNumber])
                             {
                                 GameState.Instance.HorseMoving = false;
-                                if (!((GameState.Dice1 == GameState.Dice2) || (GameState.Dice1 == 0 && GameState.Dice2 == 5) || (GameState.Dice1 == 5 && GameState.Dice2 == 0)))
+                                if (!((GameState.Instance.Dice1 == GameState.Instance.Dice2) || (GameState.Instance.Dice1 == 0 && GameState.Instance.Dice2 == 5) || (GameState.Instance.Dice1 == 5 && GameState.Instance.Dice2 == 0)))
                                     GameState.Instance.NextPlayer();
 
                                 // Reset dice roll
@@ -142,9 +142,9 @@ public class HorseControl : MonoBehaviour
     IEnumerator updateOff()
     {
         updateOn = false;
-        GameState.AttackingHorse = false;
+        GameState.Instance.AttackingHorse = false;
         yield return new WaitForSeconds(1.5f);
-        GameState.AttackingHorse = true;
+        GameState.Instance.AttackingHorse = true;
         updateOn = true;
         Anim.Play("walk");
 
@@ -194,7 +194,7 @@ public class HorseControl : MonoBehaviour
         Anim.enabled = false;
     }
 
-    IEnumerator Wait()
+    private IEnumerator Wait()
     {
         yield return new WaitForSeconds(1f);
         OnMouseDown();
