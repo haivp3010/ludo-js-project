@@ -52,6 +52,7 @@ public class RestartBtn : MonoBehaviour
 
     void OnMouseDown()
     {
+        GameState.Instance.NUMBER_OF_PLAYERS = 4;
         GameState.Instance.ResetGameState();
         SceneManager.LoadScene("Menu");
     }
